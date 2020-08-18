@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CanEnterLoginPageGuard } from './services/can-enter-login-page.guard';
 
 const routes: Routes = [
   {
-    path: 'main',
+    path: '',
     loadChildren: () => import('./main/main.module').then(m => m.MainPageModule)
   },
   {
-    path: '',
-    redirectTo: 'main',
-    pathMatch: 'full'
-  },
-  {
-    path: 'new-game',
-    loadChildren: () => import('./new-game/new-game.module').then(m => m.NewGamePageModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
+    canActivate: [CanEnterLoginPageGuard],
   },
 ];
 

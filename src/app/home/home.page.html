@@ -5,6 +5,27 @@
 </ion-header>
 
 <ion-content>
-  <app-player></app-player>
-  <app-game></app-game>
+
+  <ion-card (click)="this.presentPlayerModal()">
+    <ion-card-header>
+      <ion-card-subtitle>Welcome</ion-card-subtitle>
+      <ion-card-title>Player Name</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Card under construction
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="this.presentGameModal()">
+    <ion-card-header>
+      <ion-card-subtitle>You are playing:</ion-card-subtitle>
+      <ion-card-title>Taliban 2020</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      You are the game admin!
+      You have applied to be a player.
+      You are a regular player.
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

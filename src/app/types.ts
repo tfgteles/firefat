@@ -54,3 +54,8 @@ export interface FireFatSchedule {
     dateId: string;
     weightDate: Date;
 }
+
+export interface LoginCredential {
+    email: string;
+    password: string;
+}

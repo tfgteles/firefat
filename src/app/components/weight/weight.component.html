@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Weight</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="this.closeModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Today is not a weight day! The next one is July 24.</ion-label>
+  </ion-item>
+  <ion-form>
+    <ion-item>
+      <ion-label>New Weight</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input clearInput type="decimal" placeholder="Enter your weight"></ion-input>
+    </ion-item>
+  </ion-form>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Last weight</ion-col>
+      <ion-col>89.3 kg</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Weight goal</ion-col>
+      <ion-col>78.0 kg</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Initial weight</ion-col>
+      <ion-col>93.8 kg</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

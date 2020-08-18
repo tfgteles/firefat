@@ -1,45 +1,47 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { MainPage } from './main.page';
+import { MainPage } from "./main.page";
+import { CanEnterMainPageGuard } from '../services/can-enter-main-page.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: "main",
     component: MainPage,
+    canActivate: [CanEnterMainPageGuard],
     children: [
       {
-        path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+        path: "home",
+        loadChildren: () =>
+          import("../home/home.module").then((m) => m.HomePageModule),
       },
       {
-        path: 'play',
-        loadChildren: () => import('../play/play.module').then(m => m.PlayPageModule)
+        path: "play",
+        loadChildren: () =>
+          import("../play/play.module").then((m) => m.PlayPageModule),
       },
       {
-        path: 'cash',
-        loadChildren: () => import('../cash/cash.module').then(m => m.CashPageModule)
+        path: "result",
+        loadChildren: () =>
+          import("../result/result.module").then((m) => m.ResultPageModule),
       },
       {
-        path: 'result',
-        loadChildren: () => import('../result/result.module').then(m => m.ResultPageModule)
+        path: "feed",
+        loadChildren: () =>
+          import("../feed/feed.module").then((m) => m.FeedPageModule),
       },
       {
-        path: 'feed',
-        loadChildren: () => import('../feed/feed.module').then(m => m.FeedPageModule)
+        path: "",
+        redirectTo: "/main/home",
+        pathMatch: "full",
       },
-      {
-        path: '',
-        redirectTo: '/main/home',
-        pathMatch: 'full'
-      }
-    ]
+    ],
   },
   {
     path: '',
-    redirectTo: '/main/home',
-    pathMatch: 'full'
-  }
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

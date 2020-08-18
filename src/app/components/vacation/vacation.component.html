@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vacation</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="this.closeModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>You have already chosen your vacation dates.</ion-item>
+  <ion-form>
+    <ion-item>
+      <ion-label>Set Your Vacation</ion-label>
+      <ion-input placeholder="Choose the start date"></ion-input>
+    </ion-item>
+    <ion-button expand="full">Set Date</ion-button>
+  </ion-form>
+  <ion-item>Vacation dates:</ion-item>
+  <ion-list>
+    <ion-item>2020-07-10</ion-item>
+    <ion-item>2020-07-17</ion-item>
+    <ion-item>2020-07-24</ion-item>
+    <ion-item>2020-07-31</ion-item>
+  </ion-list>
+</ion-content>

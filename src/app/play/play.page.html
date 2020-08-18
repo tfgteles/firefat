@@ -5,49 +5,90 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+
+  <ion-card (click)="this.presentWeightModal()">
     <ion-card-header>
+      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Weight</ion-card-title>
-      <ion-img src="../../assets/img/vintage-doctor-scale.jpg"></ion-img>
     </ion-card-header>
-    <!-- <ion-card-content>
-      <ion-item>
-        Enter Weight: ____
-      </ion-item>
-      <ion-item>
-        Weight Goal: xx
-      </ion-item>
-      <ion-item>
-        Last Measure: yy (Month day)
-      </ion-item>
-      <ion-item>
-        Initial Weight: zz (Month day)
-      </ion-item>
-    </ion-card-content> -->
+    <ion-card-content>
+      Your last weight was 87.5 kg
+    </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <!-- <ion-card (click)="this.presentWeightModal()">
+    <ion-item>
+      <ion-thumbnail>
+        <ion-img src="../../assets/img/holiday-suitcase-14633017939Ur.jpg"></ion-img>
+      </ion-thumbnail>
+      <ion-label>Weight</ion-label>
+    </ion-item>
+  </ion-card> -->
+
+  <ion-card (click)="this.presentVacationModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
+      <ion-card-title>Vacation</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      You have not taken your vacation yet!
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card (click)="this.presentVacationModal()">
     <ion-card-header>
       <ion-card-title>Vacation</ion-card-title>
-      <ion-img src="../../assets/img/holiday-suitcase-14633017939Ur.jpg"></ion-img>
+      <ion-thumbnail>
+        <ion-img src="../../assets/img/holiday-suitcase-14633017939Ur.jpg"></ion-img>
+      </ion-thumbnail>
     </ion-card-header>
-    <!-- <ion-card-content>
-      <ion-img src="../../assets/img/holiday-suitcase-14633017939Ur.jpg"></ion-img>
-      <ion-item>
-        Vacation Start Date: TBD
-      </ion-item>
-      <ion-item>
-        (Month day)
-      </ion-item>
-      <ion-item>
-        (Month day)
-      </ion-item>
-      <ion-item>
-        (Month day)
-      </ion-item>
-      <ion-item>
-        (Month day)
-      </ion-item>
-    </ion-card-content> -->
+    <ion-card-content>
+      You have not taken your vacation yet!
+    </ion-card-content>
+  </ion-card> -->
+
+  <ion-card (click)="presentPaymentModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
+      <ion-card-title>Payments</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      $ 150.00 you have paid so far
+    </ion-card-content>
   </ion-card>
+
+  <!-- <ion-card (click)="presentPaymentModal()">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-img src="../../assets/img/old-chimpanzee-11298298953dvv.jpg"></ion-img>
+      </ion-thumbnail>
+      <ion-label>Payments</ion-label>
+    </ion-item>
+    <ion-card-content>
+      $ yy.yy you have paid so far
+    </ion-card-content>
+  </ion-card> -->
+
+  <ion-card (click)="this.presentChargeModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
+      <ion-card-title>Charges</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      $ 190.00 is your total fee so far
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card (click)="this.presentChargeModal()">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-img src="../../assets/img/leeuwen-in-artis-15.jpg"></ion-img>
+      </ion-thumbnail>
+      <ion-label>Fees</ion-label>
+    </ion-item>
+    <ion-card-content>
+      $ zz.zz is your total fee so far
+    </ion-card-content>
+  </ion-card> -->
+
 </ion-content>

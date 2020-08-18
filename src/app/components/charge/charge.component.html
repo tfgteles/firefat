@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Charges</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="this.closeModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Date</ion-col>
+      <ion-col>Reason</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>2020-07-17</ion-col>
+      <ion-col>You didn't loose any weight!</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>2020-07-10</ion-col>
+      <ion-col>Instead of loose weight, you gain 400g!</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>2020-07-03</ion-col>
+      <ion-col>You forgot to send your weight!</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NewGamePage } from './new-game.page';
+import { WeightComponent } from './weight.component';
 
-describe('NewGamePage', () => {
-  let component: NewGamePage;
-  let fixture: ComponentFixture<NewGamePage>;
+describe('WeightComponent', () => {
+  let component: WeightComponent;
+  let fixture: ComponentFixture<WeightComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewGamePage ],
+      declarations: [ WeightComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NewGamePage);
+    fixture = TestBed.createComponent(WeightComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

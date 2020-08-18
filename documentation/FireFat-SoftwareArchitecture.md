@@ -120,3 +120,36 @@ Pages:
 # Pictures
 
 All pictures from www.publicdomainpictures.net
+
+
+# From FireStore
+
+Temporary credential:
+email: admin@firefat.com
+password: 123456
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCfcVd1Q86ehYrA9jPbTOhRbyTrXPX3wzA",
+    authDomain: "firefat-5b99f.firebaseapp.com",
+    databaseURL: "https://firefat-5b99f.firebaseio.com",
+    projectId: "firefat-5b99f",
+    storageBucket: "firefat-5b99f.appspot.com",
+    messagingSenderId: "147632368023",
+    appId: "1:147632368023:web:85e466505e61e0280e3cd2",
+    measurementId: "G-D2MXXVJ6GS"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
