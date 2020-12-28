@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-game',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  constructor(public modalController: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  closeModal() {
+    this.modalController.dismiss();
+  }
+
 
 }

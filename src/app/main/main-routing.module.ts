@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { MainPage } from "./main.page";
-import { CanEnterMainPageGuard } from '../services/can-enter-main-page.guard';
+// import { CanEnterMainPageGuard } from '../services/can-enter-main-page.guard';
 
 const routes: Routes = [
   {
     path: "main",
     component: MainPage,
-    canActivate: [CanEnterMainPageGuard],
+    // canActivate: [CanEnterMainPageGuard],
     children: [
       {
         path: "home",

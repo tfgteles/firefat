@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFireAuthModule,
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    NgxsModule.forRoot()
   ],
   providers: [
     StatusBar,
