@@ -1,7 +1,10 @@
+import { Game } from './game.model';
+import { Player } from './player.model';
+
 export interface Weight {
-    weightId: string;
-    gameId: string;
-    playerId: string;
+    weightId: number;
+    game: Game;
+    player: Player;
     weightDate: Date;
     weightMeasured: number;
     scaleImage?: string;

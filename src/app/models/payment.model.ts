@@ -1,6 +1,10 @@
+import { Game } from './game.model';
+import { Player } from './player.model';
+
 export interface Payment {
-    gameId: string;
-    playerId: string;
+    paymentId: number;
+    game: Game;
+    player: Player;
     paymentDate: Date;
     amountPaid: number;
     receipt?: string;

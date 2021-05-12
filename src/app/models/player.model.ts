@@ -1,9 +1,11 @@
 export interface Player {
-    playerId: string;
+    playerId: number; // PK
     playerEmail: string;
-    playerName: string;
+    playerUserName?: string;
+    playerFirstName: string;
+    playerLastName: string;
     playerAvatar?: string;
     playerHeight?: number;
     playerInfo?: string;
-    playerCurrentGame: string;
+    playerCurrentGame?: number; // FK -> gameId
 }

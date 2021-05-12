@@ -1,8 +1,12 @@
+import { Game } from './game.model';
+import { Player } from './player.model';
+
 export interface Enrollment {
-    enrollmentId: string;
-    gameId: string;
-    playerId: string;
+    enrollmentId: number;
+    game: Game;
+    player: Player;
     weightGoal: number;
-    vacationStart: string; // dateId from FireFatSchedule
-    playerPrivilege: string; // null, standard, admin
+    enrollmentDate: Date;
+    vacationStart?: Date;
+    playerPrivilege: string; // idle, standard, admin
 }

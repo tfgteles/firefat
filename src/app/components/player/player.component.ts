@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Player } from 'src/app/models/player.model';
 
 @Component({
   selector: 'app-player',
@@ -8,9 +10,20 @@ import { ModalController } from '@ionic/angular';
 })
 export class PlayerComponent implements OnInit {
 
-  constructor(public modalController: ModalController) { }
+  public playerFormGroup: FormGroup;
+  public activePlayer: Player;
 
-  ngOnInit() { }
+  constructor(public modalController: ModalController, private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.playerFormGroup = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      userName: [''],
+      email: [''],
+      height: ['']
+    });
+  }
 
   closeModal() {
     this.modalController.dismiss();
