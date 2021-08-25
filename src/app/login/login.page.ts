@@ -24,12 +24,13 @@ export class LoginPage implements OnInit {
 
   login() {
     const loginCredentials: LoginCredential = this.loginFormGroup.value;
-    this.loginService.login(loginCredentials).then((authData) => {
+    /* this.loginService.login(loginCredentials).then((authData) => {
       this.router.navigate(['/main']);
       console.log(authData);
     }).catch((authError) => {
       console.log('Auth Error => ', authError);
-    });
+    }); */
+    this.router.navigate(['/main']); // temporary - to be deleted once authentication is implemented
   }
 
 }

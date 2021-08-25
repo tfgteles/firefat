@@ -1,12 +1,59 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Home</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
 
-  <ion-card (click)="this.presentPlayerModal()">
+  <ion-card (click)="presentCurrentGameModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-title>Current Game</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Your current game is Mohawk 2021.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="presentApplyGameModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-title>Apply to a Game</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="presentCreateGameModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-title>Create a New Game</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card [routerLink]="['/main/home/user-profile']">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-title>Profile</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Edit your profile here!
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="presentAdminUserModal()">
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-title>Admin</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card (click)="this.presentPlayerModal()">
     <ion-card-header>
       <ion-card-subtitle>Welcome</ion-card-subtitle>
       <ion-card-title>Player Name</ion-card-title>
@@ -14,9 +61,9 @@
     <ion-card-content>
       Card under construction
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
-  <ion-card (click)="this.presentGameModal()">
+  <!-- <ion-card (click)="this.presentGameModal()">
     <ion-card-header>
       <ion-card-subtitle>You are playing:</ion-card-subtitle>
       <ion-card-title>Taliban 2020</ion-card-title>
@@ -26,6 +73,6 @@
       You have applied to be a player.
       You are a regular player.
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
 </ion-content>

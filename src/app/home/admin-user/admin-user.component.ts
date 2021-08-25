@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss'],
+  selector: 'app-admin-user',
+  templateUrl: './admin-user.component.html',
+  styleUrls: ['./admin-user.component.scss'],
 })
-export class GameComponent implements OnInit {
+export class AdminUserComponent implements OnInit {
 
   constructor(public modalController: ModalController) { }
 
@@ -15,6 +15,5 @@ export class GameComponent implements OnInit {
   closeModal() {
     this.modalController.dismiss();
   }
-
 
 }
