@@ -1,9 +1,62 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>create-game</ion-title>
+    <ion-title>Create game</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/main/home']">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="gameFormGroup">
+    <ion-item>
+      <ion-label position="floating">Game name:</ion-label>
+      <ion-input formControlName="gameName" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea rows="3" cols="50" placeholder="Enter any info here..." formControlName="gameDescription">
+      </ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Start date:</ion-label>
+      <ion-datetime formControlName="startDate" clearInput></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">End date:</ion-label>
+      <ion-datetime formControlName="endDate" clearInput></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Weight frequency:</ion-label>
+      <ion-input formControlName="weightFrequency" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Minimum weight loss:</ion-label>
+      <ion-input formControlName="minWeightLoss" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Weight unit:</ion-label>
+      <ion-input formControlName="weightUnit" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Game fee:</ion-label>
+      <ion-input formControlName="gameFee" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Currency:</ion-label>
+      <ion-input formControlName="currency" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Vacation length:</ion-label>
+      <ion-input formControlName="vacationLength" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Is the last weight paid?:</ion-label>
+      <ion-checkbox formControlName="lastWeightPaid"></ion-checkbox>
+    </ion-item>
+    <ion-button (click)="createGame()" [disabled]="gameFormGroup.invalid" margin-top expand="full">Create
+    </ion-button>
+  </form>
 </ion-content>
