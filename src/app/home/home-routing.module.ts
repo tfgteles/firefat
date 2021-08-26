@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },
+  {
+    path: 'create-game',
+    loadChildren: () => import('./create-game/create-game.module').then( m => m.CreateGamePageModule)
   }
 ];
 

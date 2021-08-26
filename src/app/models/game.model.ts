@@ -1,23 +1,23 @@
-import { Player } from './player.model';
-import { Payment } from './payment.model';
-import { Enrollment } from './enrollment.model';
-import { Weight } from './weight.model';
+import { Member } from './member.model';
+import { WeightDate } from './weightdate.model';
+import { Message } from './message.model';
 
 export interface Game {
-    gameId: number;
-    gameAdmin: Player;
-    creationDate: Date;
+    id?: number;
     gameName: string;
-    gameInfo?: string;
-    gameSchedule?: Date[];
-    gameEnrollments?: Enrollment[];
-    gamePayments?: Payment[];
-    gameWeights?: Weight[];
-    minLoss?: number;
-    weightUnit?: string;
-    gameFee?: number;
-    feeCurrency?: string;
-    vacationLength?: number;
-    lastWeightPaid?: boolean;
-    isActive?: boolean;
+    adminUserId: number; // Game admin
+    gameDescription?: string;
+    startDate: Date;
+    endDate: Date;
+    weightFrequency: string; // enum WeightFrequency { Weekly, BiWeekly, Monthly }
+    minWeightLoss: number;
+    weightUnit: string; // enum WeightUnit { kg, lb }
+    gameFee: number;
+    currency: string; // CAD, BRL, USD
+    vacationLength: number;
+    lastWeightPaid: boolean;
+    isActive: boolean;
+    members: Member[];
+    weightDates: WeightDate[];
+    messages: Message[];
 }

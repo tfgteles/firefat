@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-profile</ion-title>
+    <ion-title>Profile</ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/main/home']">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -10,26 +10,56 @@
 </ion-header>
 
 <ion-content>
-  <!-- <form [formGroup]="playerFormGroup">
+  <form [formGroup]="profileFormGroup">
     <ion-item>
       <ion-label position="floating">First name:</ion-label>
-      <ion-input formControlName="firstName" clearInput="true" required="true"></ion-input>
+      <ion-input formControlName="firstName" clearInput></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Last name:</ion-label>
-      <ion-input formControlName="lastName" clearInput="true" required="true"></ion-input>
+      <ion-input formControlName="lastName" clearInput></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Username:</ion-label>
-      <ion-input formControlName="userName" clearInput="true" required="true"></ion-input>
+      <ion-label position="floating">How would you like to be called?</ion-label>
+      <ion-input formControlName="userName" clearInput></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Email:</ion-label>
-      <ion-input formControlName="email" inputmode="email" type="email" clearInput="true" required="true"></ion-input>
+      <ion-label position="floating">Date of birth:</ion-label>
+      <ion-datetime formControlName="dateOfBirth" clearInput></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Height (cm):</ion-label>
-      <ion-input formControlName="firstName" inputmode="numeric" type="number" clearInput="true"></ion-input>
+      <ion-label position="floating">Phone number:</ion-label>
+      <ion-input formControlName="phoneNumber" clearInput></ion-input>
     </ion-item>
-  </form> -->
+    <ion-item>
+      <ion-label position="floating">Address:</ion-label>
+      <ion-input formControlName="streetAddress" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">City:</ion-label>
+      <ion-input formControlName="city" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Province:</ion-label>
+      <ion-input formControlName="province" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Postal Code:</ion-label>
+      <ion-input formControlName="postalCode" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Country:</ion-label>
+      <ion-input formControlName="country" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Height:</ion-label>
+      <ion-input formControlName="userHeight" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Bio:</ion-label>
+      <ion-textarea rows="3" cols="50" placeholder="Enter any notes here..." formControlName="userBio"></ion-textarea>
+    </ion-item>
+    <ion-button (click)="updateProfile()" [disabled]="profileFormGroup.invalid" margin-top expand="full">Create
+    </ion-button>
+  </form>
 </ion-content>

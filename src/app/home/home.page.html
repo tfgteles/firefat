@@ -25,7 +25,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card (click)="presentCreateGameModal()">
+  <ion-card [routerLink]="['/main/home/create-game']">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Create a New Game</ion-card-title>

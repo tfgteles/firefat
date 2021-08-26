@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { Player } from 'src/app/models/player.model';
+// import { Player } from 'src/app/models/player.model';
 
 @Component({
   selector: 'app-player',
@@ -11,7 +11,7 @@ import { Player } from 'src/app/models/player.model';
 export class PlayerComponent implements OnInit {
 
   public playerFormGroup: FormGroup;
-  public activePlayer: Player;
+  // public activePlayer: Player;
 
   constructor(public modalController: ModalController, private formBuilder: FormBuilder) { }
 

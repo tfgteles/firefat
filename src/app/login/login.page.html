@@ -19,6 +19,10 @@
         </ion-item>
         <ion-button (click)="login()" [disabled]="loginFormGroup.invalid" margin-top expand="full">Login</ion-button>
       </form>
+      <ion-text color="primary">
+        <p [routerLink]="['/login/signup']">Sign up</p>
+      </ion-text>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

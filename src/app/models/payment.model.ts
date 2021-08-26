@@ -1,11 +1,9 @@
-import { Game } from './game.model';
-import { Player } from './player.model';
+import { Member } from './member.model';
 
 export interface Payment {
-    paymentId: number;
-    game: Game;
-    player: Player;
+    id?: number;
+    member: Member; // Payee
+    receiptImage?: string; // to be developed
     paymentDate: Date;
     amountPaid: number;
-    receipt?: string;
 }

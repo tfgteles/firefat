@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup } from '@angular/forms';
-// import { Player } from 'src/app/models/player.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,19 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfilePage implements OnInit {
 
-  // public playerFormGroup: FormGroup;
-  // public activePlayer: Player;
+  public profileFormGroup: FormGroup;
 
-  constructor(/* private formBuilder: FormBuilder */) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    /* this.playerFormGroup = this.formBuilder.group({
+    this.profileFormGroup = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
       userName: [''],
-      email: [''],
-      height: ['']
-    }); */
+      userGender: [''],
+      dateOfBirth: [''],
+      phoneNumber: [''],
+      streetAddress: [''],
+      city: [''],
+      province: [''],
+      postalCode: [''],
+      country: [''],
+      userHeight: [''],
+      userBio: [''],
+      userPhoto: [''],
+    });
+  }
+
+  public updateProfile() {
+    console.log('Profile update clicked');
   }
 
 }

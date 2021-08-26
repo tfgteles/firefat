@@ -1,11 +1,10 @@
-import { Game } from './game.model';
-import { Player } from './player.model';
+import { Member } from './member.model';
+import { WeightDate } from './weightdate.model';
 
 export interface Weight {
-    weightId: number;
-    game: Game;
-    player: Player;
-    weightDate: Date;
-    weightMeasured: number;
-    scaleImage?: string;
+    id?: number;
+    member: Member; // Related member
+    weightDate: WeightDate; // Related date
+    scaleImage?: string; // to be developed
+    weightMeasure: number;
 }
