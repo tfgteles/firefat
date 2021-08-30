@@ -14,6 +14,14 @@ const routes: Routes = [
   {
     path: 'create-game',
     loadChildren: () => import('./create-game/create-game.module').then( m => m.CreateGamePageModule)
+  },
+  {
+    path: 'apply-game',
+    loadChildren: () => import('./apply-game/apply-game.module').then( m => m.ApplyGamePageModule)
+  },
+  {
+    path: 'current-game',
+    loadChildren: () => import('./current-game/current-game.module').then( m => m.CurrentGamePageModule)
   }
 ];
 

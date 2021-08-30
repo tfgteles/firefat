@@ -3,55 +3,59 @@ import { Member } from '../models/member.model';
 import { Game } from '../models/game.model';
 import { User } from '../models/user.model';
 import { Weight } from '../models/weight.model';
+import { WeightDate } from '../models/weightdate.model';
+import { Message } from '../models/message.model';
+import { Payment } from '../models/payment.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameDataService {
-  public gameId;
-  public gameParticipants;
-  public gameWeights;
-  public gamePayments;
-  public gameDates;
 
-  // Fake data for test purpose
-  private users: User[] = [
-    { id: 1, userEmail: 'email1@mail.com', firstName: 'player 1', lastName: 'last name' },
-    { id: 2, userEmail: 'email2@mail.com', firstName: 'player 2', lastName: 'last name' },
-    { id: 3, userEmail: 'email3@mail.com', firstName: 'player 3', lastName: 'last name' }
-  ];
-  /* private games: Game[] = [
-    { gameId: 1, gameAdmin: this.players[1], creationDate: new Date('2019/01/15'), gameName: 'Taliban 2019' },
-    { gameId: 2, gameAdmin: this.players[0], creationDate: new Date('2020/01/15'), gameName: 'Taliban 2020' },
-    { gameId: 3, gameAdmin: this.players[2], creationDate: new Date('2021/01/15'), gameName: 'Taliban 2021' }
-  ]; */
+  public currentUser: User;
+  private users: User[];
+  private games: Game[];
+  private selectedGame: Game;
 
-  constructor() { }
+  private members: Member[];
+  private weightDates: WeightDate[];
+  private messages: Message[];
+  private weights: Weight[];
+  private payments: Payment[];
+
+  constructor() {
+    this.loadFakeUsers();
+    this.currentUser = this.getUserByEmail('email2@mail.com');
+  }
+
+  public getUserByEmail(userEmail: string): User {
+    return this.users.find(p => p.userEmail === userEmail);
+  }
 
   public getUserDetails(userId: number): User {
     return this.users.find(p => p.id === userId);
   }
 
-  /* public getAllActiveGames(): Game[] {
+  public async getAllActiveGames(): Promise<Game[]> {
     return this.games;
-  } */
+  }
 
-  /* public getGameDetails(gameId: number | string): Game {
-    return this.games.find(g => g.gameId === gameId);
-  } */
+  public getGameDetails(gameId: number): Game {
+    return this.games.find(g => g.id === gameId);
+  }
 
-  /* public createGame(game: Game) {
+  public createGame(game: Game) {
     let maxId = 1;
     if (this.games.length > 0) {
       for (const g of this.games) {
-        if (g.gameId > maxId) {
-          maxId = g.gameId;
+        if (g.id > maxId) {
+          maxId = g.id;
         }
       }
     }
-    game.gameId = maxId + 1;
+    game.id = maxId + 1;
     this.games.push(game);
-  } */
+  }
 
   public createUser(user: User) {
     let maxId = 1;
@@ -66,9 +70,9 @@ export class GameDataService {
     this.users.push(user);
   }
 
-  /* public applyToAGame(applicant: User, appliedGame: Game, goal: number) {
+  /* public applyToAGame(member: Member) {
     let maxId = 1;
-    if (appliedGame.gameEnrollments.length > 0) {
+    if (members.length > 0) {
       for (const e of appliedGame.gameEnrollments) {
         if (e.enrollmentId > maxId) {
           maxId = e.enrollmentId;
@@ -114,5 +118,72 @@ export class GameDataService {
 
   // public setVacationStart(player: Player, game: Game, date: Date) { }
 
+  // Fake data
+  public async loadFakeUsers(): Promise<void> {
+    this.users = [
+      { id: 1, userEmail: 'email1@mail.com', firstName: 'player 1', lastName: 'last name' },
+      { id: 2, userEmail: 'email2@mail.com', firstName: 'player 2', lastName: 'last name' },
+      { id: 3, userEmail: 'email3@mail.com', firstName: 'player 3', lastName: 'last name' }
+    ];
+  }
+
+  public async loadFakeGames(): Promise<void> {
+    this.games = [
+      {
+        id: 1,
+        gameName: 'Taliban 2019',
+        adminUserId: 1,
+        startDate: new Date('2019/01/15'),
+        endDate: new Date('2019/12/15'),
+        weightFrequency: 'Weekly',
+        minWeightLoss: 0.1,
+        weightUnit: 'kg',
+        gameFee: 10,
+        currency: 'CAD',
+        vacationLength: 4,
+        lastWeightPaid: false,
+        isActive: true,
+        members: [],
+        weightDates: [],
+        messages: []
+      },
+      {
+        id: 2,
+        gameName: 'Taliban 2020',
+        adminUserId: 1,
+        startDate: new Date('2020/01/15'),
+        endDate: new Date('2020/12/15'),
+        weightFrequency: 'Weekly',
+        minWeightLoss: 0.1,
+        weightUnit: 'kg',
+        gameFee: 10,
+        currency: 'CAD',
+        vacationLength: 4,
+        lastWeightPaid: false,
+        isActive: true,
+        members: [],
+        weightDates: [],
+        messages: []
+      },
+      {
+        id: 3,
+        gameName: 'Taliban 2021',
+        adminUserId: 3,
+        startDate: new Date('2021/01/15'),
+        endDate: new Date('2021/12/15'),
+        weightFrequency: 'Weekly',
+        minWeightLoss: 0.1,
+        weightUnit: 'kg',
+        gameFee: 10,
+        currency: 'CAD',
+        vacationLength: 4,
+        lastWeightPaid: false,
+        isActive: true,
+        members: [],
+        weightDates: [],
+        messages: []
+      }
+    ];
+  }
 
 }

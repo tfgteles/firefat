@@ -1,44 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CurrentGameComponent } from './current-game/current-game.component';
-import { ApplyGameComponent } from './apply-game/apply-game.component';
-// import { CreateGameComponent } from './create-game/create-game.component';
+import { User } from '../models/user.model';
+import { GameDataService } from '../services/game-data.service';
 import { AdminUserComponent } from './admin-user/admin-user.component';
-
-// import { PlayerComponent } from '../components/player/player.component';
-
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  constructor(public modalController: ModalController) { }
+export class HomePage implements OnInit {
 
-  async presentCurrentGameModal() {
-    const modal = await this.modalController.create({
-      component: CurrentGameComponent,
-      cssClass: 'standard-modal'
-    });
-    return await modal.present();
+  public currentUser: User;
+
+  constructor(public modalController: ModalController, private gameDataService: GameDataService) { }
+
+  public async ngOnInit(): Promise<void> {
+    this.currentUser = this.gameDataService.currentUser;
+    await this.gameDataService.loadFakeGames();
   }
-
-  async presentApplyGameModal() {
-    const modal = await this.modalController.create({
-      component: ApplyGameComponent,
-      cssClass: 'standard-modal'
-    });
-    return await modal.present();
-  }
-
-  /* async presentCreateGameModal() {
-    const modal = await this.modalController.create({
-      component: CreateGameComponent,
-      cssClass: 'standard-modal'
-    });
-    return await modal.present();
-  } */
 
   async presentAdminUserModal() {
     const modal = await this.modalController.create({
@@ -47,13 +27,6 @@ export class HomePage {
     });
     return await modal.present();
   }
-
-  /* async presentPlayerModal() {
-    const modal = await this.modalController.create({
-      component: PlayerComponent,
-    });
-    return await modal.present();
-  } */
 
   testClick() {
     console.log('Something clicked!');

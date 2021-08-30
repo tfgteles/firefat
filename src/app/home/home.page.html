@@ -6,7 +6,7 @@
 
 <ion-content>
 
-  <ion-card (click)="presentCurrentGameModal()">
+  <ion-card [routerLink]="['/main/home/current-game']">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Current Game</ion-card-title>
@@ -16,7 +16,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card (click)="presentApplyGameModal()">
+  <ion-card [routerLink]="['/main/home/apply-game']">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Apply to a Game</ion-card-title>

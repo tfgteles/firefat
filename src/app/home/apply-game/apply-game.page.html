@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Apply to a Game</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/main/home']">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="memberFormGroup">
+    <ion-item button (click)="selectGameModal()">
+      <ion-label>Select a game</ion-label>
+      <ion-icon name="search" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Weight goal:</ion-label>
+      <ion-input formControlName="weightGoal" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Select weight unit:</ion-label>
+      <ion-select formControlName="weightUnit">
+        <ion-select-option value="kg">kg</ion-select-option>
+        <ion-select-option value="lb">lb</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button (click)="applyToAGame()" [disabled]="memberFormGroup.invalid" margin-top expand="full">Apply
+    </ion-button>
+  </form>
+</ion-content>

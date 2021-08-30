@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Game } from 'src/app/models/game.model';
 
 @Component({
   selector: 'app-select-game',
@@ -8,12 +9,18 @@ import { ModalController } from '@ionic/angular';
 })
 export class SelectGameComponent implements OnInit {
 
+  @Input() games: Game[];
+
   constructor(public modalController: ModalController) { }
 
   ngOnInit() { }
 
-  closeModal() {
+  public closeModal() {
     this.modalController.dismiss();
+  }
+
+  public selectAndCloseModal(selectedGame: Game) {
+    this.modalController.dismiss(selectedGame);
   }
 
 }
