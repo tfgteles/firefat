@@ -6,17 +6,17 @@
 
 <ion-content>
 
-  <ion-card [routerLink]="['/main/home/current-game']">
+  <ion-card routerLink="./current-game">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Current Game</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Your current game is Mohawk 2021.
+      Your current game is {{currentGame?.gameName}}.
     </ion-card-content>
   </ion-card>
 
-  <ion-card [routerLink]="['/main/home/apply-game']">
+  <ion-card routerLink="./apply-game">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Apply to a Game</ion-card-title>
@@ -25,7 +25,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card [routerLink]="['/main/home/create-game']">
+  <ion-card [routerLink]="['/main/home', 'create-game']">
     <ion-card-header>
       <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Create a New Game</ion-card-title>
@@ -34,9 +34,9 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card [routerLink]="['/main/home/user-profile']">
+  <ion-card routerLink="./user-profile">
     <ion-card-header>
-      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
+      <ion-card-subtitle>{{currentUser?.userName}}</ion-card-subtitle>
       <ion-card-title>Profile</ion-card-title>
     </ion-card-header>
     <ion-card-content>

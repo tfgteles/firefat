@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-// import { CanEnterLoginPageGuard } from './services/can-enter-login-page.guard';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CanEnterLoginPageGuard } from './services/can-enter-login-page.guard';
 
 const routes: Routes = [
   {
@@ -10,8 +11,12 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
-    // canActivate: [CanEnterLoginPageGuard],
+    canActivate: [CanEnterLoginPageGuard],
   },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

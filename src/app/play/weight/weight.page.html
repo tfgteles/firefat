@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Weight</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/main/play">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="weightFormGroup">
+
+    <ion-item>
+      <ion-label position="floating">Enter your weight:</ion-label>
+      <ion-input formControlName="weightMeasure" clearInput type="number"></ion-input>
+    </ion-item>
+
+    <ion-button (click)="enterWeight()" [disabled]="weightFormGroup.invalid" margin-top expand="full">Create
+    </ion-button>
+  </form>
+</ion-content>

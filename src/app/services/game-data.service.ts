@@ -6,12 +6,15 @@ import { Weight } from '../models/weight.model';
 import { WeightDate } from '../models/weightdate.model';
 import { Message } from '../models/message.model';
 import { Payment } from '../models/payment.model';
+import { GAMES, USERS } from './mock-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameDataService {
 
+  public currentUserEmail = 'email2@mail.com';
+  public currentGame: Game;
   public currentUser: User;
   private users: User[];
   private games: Game[];
@@ -24,24 +27,26 @@ export class GameDataService {
   private payments: Payment[];
 
   constructor() {
-    this.loadFakeUsers();
-    this.currentUser = this.getUserByEmail('email2@mail.com');
+    this.users = USERS;
   }
 
-  public getUserByEmail(userEmail: string): User {
-    return this.users.find(p => p.userEmail === userEmail);
+  public async getUserByEmail(userEmail: string): Promise<User> {
+    this.currentUser = this.users.find(p => p.userEmail === userEmail);
+    return this.currentUser;
   }
 
-  public getUserDetails(userId: number): User {
+  public async getUserById(userId: number): Promise<User> {
     return this.users.find(p => p.id === userId);
   }
 
   public async getAllActiveGames(): Promise<Game[]> {
+    this.games = GAMES;
     return this.games;
   }
 
-  public getGameDetails(gameId: number): Game {
-    return this.games.find(g => g.id === gameId);
+  public async getGameById(gameId: number): Promise<Game> {
+    this.currentGame = this.games.find(g => g.id === gameId);
+    return this.currentGame;
   }
 
   public createGame(game: Game) {
@@ -118,72 +123,5 @@ export class GameDataService {
 
   // public setVacationStart(player: Player, game: Game, date: Date) { }
 
-  // Fake data
-  public async loadFakeUsers(): Promise<void> {
-    this.users = [
-      { id: 1, userEmail: 'email1@mail.com', firstName: 'player 1', lastName: 'last name' },
-      { id: 2, userEmail: 'email2@mail.com', firstName: 'player 2', lastName: 'last name' },
-      { id: 3, userEmail: 'email3@mail.com', firstName: 'player 3', lastName: 'last name' }
-    ];
-  }
-
-  public async loadFakeGames(): Promise<void> {
-    this.games = [
-      {
-        id: 1,
-        gameName: 'Taliban 2019',
-        adminUserId: 1,
-        startDate: new Date('2019/01/15'),
-        endDate: new Date('2019/12/15'),
-        weightFrequency: 'Weekly',
-        minWeightLoss: 0.1,
-        weightUnit: 'kg',
-        gameFee: 10,
-        currency: 'CAD',
-        vacationLength: 4,
-        lastWeightPaid: false,
-        isActive: true,
-        members: [],
-        weightDates: [],
-        messages: []
-      },
-      {
-        id: 2,
-        gameName: 'Taliban 2020',
-        adminUserId: 1,
-        startDate: new Date('2020/01/15'),
-        endDate: new Date('2020/12/15'),
-        weightFrequency: 'Weekly',
-        minWeightLoss: 0.1,
-        weightUnit: 'kg',
-        gameFee: 10,
-        currency: 'CAD',
-        vacationLength: 4,
-        lastWeightPaid: false,
-        isActive: true,
-        members: [],
-        weightDates: [],
-        messages: []
-      },
-      {
-        id: 3,
-        gameName: 'Taliban 2021',
-        adminUserId: 3,
-        startDate: new Date('2021/01/15'),
-        endDate: new Date('2021/12/15'),
-        weightFrequency: 'Weekly',
-        minWeightLoss: 0.1,
-        weightUnit: 'kg',
-        gameFee: 10,
-        currency: 'CAD',
-        vacationLength: 4,
-        lastWeightPaid: false,
-        isActive: true,
-        members: [],
-        weightDates: [],
-        messages: []
-      }
-    ];
-  }
 
 }
