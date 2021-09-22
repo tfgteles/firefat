@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginCredential } from '../models/login-credential.model';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { AuthResult } from '../models/auth-result';
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,18 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  public async login() {
     const loginCredentials: LoginCredential = this.loginFormGroup.value;
-    /* this.loginService.login(loginCredentials).then((authData) => {
-      this.router.navigate(['/main']);
-      console.log(authData);
-    }).catch((authError) => {
-      console.log('Auth Error => ', authError);
-    }); */
+    let authResult: AuthResult;
+    console.log(loginCredentials);
+    authResult = await this.loginService.loginUser(loginCredentials);
+    console.log(authResult.success);
+    // this.loginService.loginUser(loginCredentials).subscribe((authData) => {
+      // this.router.navigate(['/main']);
+      // console.log(authData);
+    // })/* .catch((authError) => {
+      // console.log('Auth Error => ', authError);
+    // }) */;
     this.router.navigate(['/main']); // temporary - to be deleted once authentication is implemented
   }
 
