@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoginCredential } from '../models/login-credential.model';
+import { LoginCredential } from '../models/auth-dtos';
 import { LoginService } from '../services/login.service';
-import { Router } from '@angular/router';
-import { AuthResult } from '../models/auth-result';
+import { AuthResult } from '../models/auth-dtos';
 
 @Component({
   selector: 'app-login',
@@ -11,31 +10,30 @@ import { AuthResult } from '../models/auth-result';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  loginFormGroup: FormGroup;
+  public loginFormGroup: FormGroup;
+  public showErrorMessage: boolean;
+  public errorMessage: string;
 
-  constructor(private router: Router, private loginService: LoginService, formBuilder: FormBuilder) {
-    this.loginFormGroup = formBuilder.group({
+  constructor(private loginService: LoginService, private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.loginFormGroup = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
-  }
-
-  ngOnInit() {
+    this.errorMessage = '';
+    this.showErrorMessage = false;
   }
 
   public async login() {
     const loginCredentials: LoginCredential = this.loginFormGroup.value;
     let authResult: AuthResult;
-    console.log(loginCredentials);
     authResult = await this.loginService.loginUser(loginCredentials);
-    console.log(authResult.success);
-    // this.loginService.loginUser(loginCredentials).subscribe((authData) => {
-      // this.router.navigate(['/main']);
-      // console.log(authData);
-    // })/* .catch((authError) => {
-      // console.log('Auth Error => ', authError);
-    // }) */;
-    this.router.navigate(['/main']); // temporary - to be deleted once authentication is implemented
+    if (!authResult.success) {
+      this.errorMessage = authResult.errors[0];
+      this.showErrorMessage = true;
+      console.log(this.errorMessage);
+    }
   }
 
 }
