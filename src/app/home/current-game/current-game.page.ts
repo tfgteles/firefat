@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SelectGameComponent } from 'src/app/components/select-game/select-game.component';
 import { Game } from 'src/app/models/game.model';
 import { GameDataService } from 'src/app/services/game-data.service';
 
@@ -19,7 +18,7 @@ export class CurrentGamePage implements OnInit {
     this.games = await this.gameData.getAllActiveGames();
   }
 
-  public async selectGameModal(): Promise<void> {
+  /* public async selectGameModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: SelectGameComponent,
       componentProps: { games: this.games },
@@ -29,7 +28,7 @@ export class CurrentGamePage implements OnInit {
     modal.onDidDismiss().then(data => {
       console.log(data.data);
     });
-  }
+  } */
 
   public changeCurrentGame() {
     console.log('Current game change button clicked');

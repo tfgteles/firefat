@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { CurrentGamePageRoutingModule } from './current-game-routing.module';
 
 import { CurrentGamePage } from './current-game.page';
-import { SelectGameComponent } from 'src/app/components/select-game/select-game.component';
 
 @NgModule({
   imports: [
@@ -16,6 +15,6 @@ import { SelectGameComponent } from 'src/app/components/select-game/select-game.
     IonicModule,
     CurrentGamePageRoutingModule
   ],
-  declarations: [CurrentGamePage, SelectGameComponent]
+  declarations: [CurrentGamePage]
 })
 export class CurrentGamePageModule { }

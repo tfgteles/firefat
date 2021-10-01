@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ApplyGamePageRoutingModule } from './apply-game-routing.module';
 
 import { ApplyGamePage } from './apply-game.page';
-import { SelectGameComponent } from 'src/app/components/select-game/select-game.component';
+
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { SelectGameComponent } from 'src/app/components/select-game/select-game.
     IonicModule,
     ApplyGamePageRoutingModule
   ],
-  declarations: [ApplyGamePage, SelectGameComponent]
+  declarations: [ApplyGamePage]
 })
 export class ApplyGamePageModule { }
