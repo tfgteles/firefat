@@ -50,7 +50,7 @@ export class LoginService {
     try {
       authResult = await this.http.post<AuthResult>(url, userRegistration).toPromise();
       localStorage.setItem('id_token', authResult.token);
-      this.router.navigate(['/main/user-profile']);
+      this.router.navigate(['/main/home/user-profile']);
     } catch(err) {
       console.log(err);
       authResult = {token: null, success: false, errors: ['Something went wrong. Please, try again.']};
