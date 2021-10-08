@@ -6,13 +6,14 @@ import {LoginCredential, UserRegistration} from '../models/auth-dtos';
 import { BASE_URL, LOGIN_PATH, REGISTER_PATH } from './constants';
 import { AuthResult } from '../models/auth-dtos';
 import { Router } from '@angular/router';
+import { GameDataService } from './game-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private gameData: GameDataService) {}
 
   public async loginUser(credentials: LoginCredential): Promise<AuthResult> {
     const url = BASE_URL + LOGIN_PATH;
@@ -22,6 +23,7 @@ export class LoginService {
       authResult = await this.http.post<AuthResult>(url, credentials).toPromise();
       console.log(authResult);
       localStorage.setItem('id_token', authResult.token);
+      this.gameData.currentUserEmail = credentials.email;
       this.router.navigate(['/main']);
     } catch(err) {
       console.log(err);

@@ -1,10 +1,12 @@
-import { Member } from './member.model';
-import { WeightDate } from './weightdate.model';
+import { Member } from "./member.model";
+import { WeightDate } from "./weight-date.model";
 
 export interface Weight {
     id?: number;
-    member: Member; // Related member
-    weightDate: WeightDate; // Related date
+    memberId: number; // Related member
+    member?: Member;
+    weightDateId: number; // Related date
+    weightDate: WeightDate;
     scaleImage?: string; // to be developed
     weightMeasure: number;
 }

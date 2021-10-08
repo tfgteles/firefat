@@ -1,9 +1,10 @@
-import { Member } from './member.model';
+import { Member } from "./member.model";
 
 export interface Payment {
     id?: number;
-    member: Member; // Payee
+    memberId?: number; // Payee
+    member?: Member;
     receiptImage?: string; // to be developed
-    paymentDate: Date;
+    paymentDate?: Date;
     amountPaid: number;
 }

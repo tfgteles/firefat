@@ -1,19 +1,20 @@
-import { Game } from './game.model';
-import { User } from './user.model';
-import { WeightDate } from './weightdate.model';
 import { Weight } from './weight.model';
 import { Payment } from './payment.model';
+import { Game } from './game.model';
+import { UserProfile } from './user-profile.model';
 
 export interface Member {
     id?: number;
-    game: Game;
-    user: User;
+    gameId: number;
+    game?: Game;
     weightGoal: number;
-    applicationDate: Date;
+    userProfileId: number;
+    userProfile?: UserProfile;
+    applicationDate?: Date;
     responseDate?: Date;
-    weightDate?: WeightDate; // Vacation start date
-    memberStatus: string; // enum MemberStatus { Applied, Standard, Leader, Denied }
-    goalAchieved: boolean;
-    weights: Weight[];
-    payments: Payment[];
+    vacationStartDateId?: number; // WeightDateId
+    memberStatus?: string; // Applied, Standard, Leader, Denied
+    goalAchieved?: boolean;
+    weights?: Weight[];
+    payments?: Payment[];
 }

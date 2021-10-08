@@ -1,4 +1,6 @@
-export interface User {
+import { Member } from "./member.model";
+
+export interface UserProfile {
     id?: number; // PK
     userEmail: string;
     firstName?: string;
@@ -16,4 +18,6 @@ export interface User {
     userHeight?: number;
     userBio?: string;
     userPhoto?: string; // to be developed
+    isAppAdmin?: boolean;
+    members?: Member[];
 }
