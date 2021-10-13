@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginCredential } from '../models/auth-dtos';
 import { LoginService } from '../services/login.service';
 import { AuthResult } from '../models/auth-dtos';
+import { GameRestService } from '../services/game-rest.service';
+import { Game } from '../models/game.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,7 @@ export class LoginPage implements OnInit {
   public showErrorMessage: boolean;
   public errorMessage: string;
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder) { }
+  constructor(private loginService: LoginService, private formBuilder: FormBuilder, private gameRestService: GameRestService) { }
 
   ngOnInit() {
     this.loginFormGroup = this.formBuilder.group({
@@ -34,6 +37,13 @@ export class LoginPage implements OnInit {
       this.showErrorMessage = true;
       console.log(this.errorMessage);
     }
+  }
+
+  public async testButton() {
+    this.gameRestService.testEndpoint()
+    .subscribe(resp => {
+      console.log(resp);
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 import { Game } from '../models/game.model';
-import { User } from '../models/user.model';
+import { UserProfile } from '../models/user-profile.model';
 
-export const USERS: User[] = [
+export const USERS: UserProfile[] = [
     { id: 1, userEmail: 'email1@mail.com', firstName: 'player 1', lastName: 'last name', userName: 'Player 1' },
     { id: 2, userEmail: 'email2@mail.com', firstName: 'player 2', lastName: 'last name', userName: 'Player 2' },
     { id: 3, userEmail: 'email3@mail.com', firstName: 'player 3', lastName: 'last name', userName: 'Player 3' }
@@ -24,7 +24,7 @@ export const GAMES: Game[] = [
         isActive: true,
         members: [],
         weightDates: [],
-        messages: []
+        gameMessages: []
     },
     {
         id: 2,
@@ -42,7 +42,7 @@ export const GAMES: Game[] = [
         isActive: true,
         members: [],
         weightDates: [],
-        messages: []
+        gameMessages: []
     },
     {
         id: 3,
@@ -60,6 +60,6 @@ export const GAMES: Game[] = [
         isActive: true,
         members: [],
         weightDates: [],
-        messages: []
+        gameMessages: []
     }
 ];

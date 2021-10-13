@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
 import { Member } from 'src/app/models/member.model';
 import { GameDataService } from 'src/app/services/game-data.service';
+import { GameRestService } from 'src/app/services/game-rest.service';
 
 @Component({
   selector: 'app-apply-game',
@@ -16,7 +17,7 @@ export class ApplyGamePage implements OnInit {
   public newMember: Member;
   public games: Game[];
 
-  constructor(public modalController: ModalController, private formBuilder: FormBuilder, private gameData: GameDataService) { }
+  constructor(public modalController: ModalController, private formBuilder: FormBuilder, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
 
   public async ngOnInit(): Promise<void> {
     this.memberFormGroup = this.formBuilder.group({
@@ -24,7 +25,10 @@ export class ApplyGamePage implements OnInit {
       weightGoal: [''],
       weightUnit: ['']
     });
-    this.games = await this.gameData.getAllActiveGames();
+    this.gameRestService.getAllActiveGames().subscribe(resp => {
+      this.gameDataService.activeGames = resp;
+      console.log(resp);
+    });
   }
 
   /* public async selectGameModal(): Promise<void> {

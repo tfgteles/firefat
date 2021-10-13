@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
 import { GameDataService } from 'src/app/services/game-data.service';
+import { GameRestService } from 'src/app/services/game-rest.service';
 
 @Component({
   selector: 'app-current-game',
@@ -12,10 +13,13 @@ export class CurrentGamePage implements OnInit {
 
   public games: Game[];
 
-  constructor(public modalController: ModalController, private gameData: GameDataService) { }
+  constructor(public modalController: ModalController, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
 
   public async ngOnInit(): Promise<void> {
-    this.games = await this.gameData.getAllActiveGames();
+    this.gameRestService.getAllActiveGames().subscribe(resp => {
+      this.gameDataService.activeGames = resp;
+      console.log(resp);
+    });
   }
 
   /* public async selectGameModal(): Promise<void> {

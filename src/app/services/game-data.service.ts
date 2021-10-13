@@ -15,8 +15,10 @@ export class GameDataService {
   public currentUserEmail = '';
   public currentUser: UserProfile;
   public currentGame: Game;
+
+  public activeGames: Game[];
   
-  private users: UserProfile[];
+  /* private users: UserProfile[];
   private games: Game[];
   private selectedGame: Game;
 
@@ -24,7 +26,7 @@ export class GameDataService {
   private weightDates: WeightDate[];
   private messages: GameMessage[];
   private weights: Weight[];
-  private payments: Payment[];
+  private payments: Payment[]; */
 
   constructor() { }
 
