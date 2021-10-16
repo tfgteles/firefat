@@ -1,4 +1,4 @@
-import { Member } from "./member.model";
+import { Game } from "./game.model";
 
 export interface UserProfile {
     id?: number; // PK
@@ -18,6 +18,5 @@ export interface UserProfile {
     userHeight?: number;
     userBio?: string;
     userPhoto?: string; // to be developed
-    isAppAdmin?: boolean;
-    members?: Member[];
+    membership?: Game[];
 }

@@ -19,18 +19,16 @@ export class HomePage implements OnInit {
   constructor(public modalController: ModalController, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
 
   public async ngOnInit(): Promise<void> {
+
     this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
-      this.gameDataService.currentUser = resp;
+      this.gameDataService.currentUser = {...resp};
       this.userName = resp.userName? resp.userName : resp.userEmail;
       console.log(resp);
     });
-    this.gameRestService.getAllActiveGames().subscribe(resp => {
-      this.gameDataService.activeGames = resp;
-      console.log(resp);
-    });
-    if (this.gameDataService.currentUser.preferredGameId) {
+
+    if (this.gameDataService.currentUser?.preferredGameId) {
       this.gameRestService.getGameDetailsById(this.gameDataService.currentUser.preferredGameId).subscribe(resp => {
-        this.gameDataService.currentGame = resp;
+        this.gameDataService.currentGame = {...resp};
         this.currentGameMessage = `You are current playing ${resp.gameName}. Click here to change the game.`;
         console.log(resp);
       });

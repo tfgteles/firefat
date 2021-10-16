@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
 import { Member } from 'src/app/models/member.model';
@@ -16,19 +16,30 @@ export class ApplyGamePage implements OnInit {
   public memberFormGroup: FormGroup;
   public newMember: Member;
   public games: Game[];
+  public selectedGame: Game;
+  public isGameSelected: boolean;
 
-  constructor(public modalController: ModalController, private formBuilder: FormBuilder, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
+  constructor(
+    public modalController: ModalController, 
+    private formBuilder: FormBuilder, 
+    private gameRestService: GameRestService, 
+    private gameDataService: GameDataService
+    ) { 
+      this.memberFormGroup = this.formBuilder.group({
+        weightGoal: ['', Validators.required]
+      });
+    }
 
   public async ngOnInit(): Promise<void> {
-    this.memberFormGroup = this.formBuilder.group({
-      gameId: [''],
-      weightGoal: [''],
-      weightUnit: ['']
-    });
+
+    this.isGameSelected = false;
+
     this.gameRestService.getAllActiveGames().subscribe(resp => {
-      this.gameDataService.activeGames = resp;
+      this.gameDataService.activeGames = [...resp];
+      this.games = [...resp];
       console.log(resp);
     });
+
   }
 
   /* public async selectGameModal(): Promise<void> {
@@ -43,8 +54,26 @@ export class ApplyGamePage implements OnInit {
     });
   } */
 
+
   public applyToAGame(): void {
-    console.log('Apply to a game clicked');
+
+    let member: Member = {
+      groupId: this.selectedGame.id,
+      playerId: this.gameDataService.currentUser.id,
+      weightGoal: this.memberFormGroup.value.weightGoal
+    };
+    
+    console.log(member);
+
+    this.gameRestService.applyToAGame(member).subscribe(resp => {
+      console.log(resp);
+      this.gameDataService.currentUser.membership.push(this.selectedGame);
+    });
+  }
+
+  public selectGame(game: Game): void {
+    this.isGameSelected = true;
+    this.selectedGame = game;
   }
 
 }

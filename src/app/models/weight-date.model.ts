@@ -2,7 +2,6 @@ import { Game } from './game.model';
 
 export interface WeightDate {
     id?: number;
-    gameId?: number;
-    game?: Game;
+    groupId?: number; // gameId
     scheduledDate: Date;
 }

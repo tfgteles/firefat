@@ -10,23 +10,35 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="memberFormGroup">
+
+  <ion-grid> *ngIf="!isGameSelected"
+    <ion-row>
+      <ion-col>Game Id</ion-col>
+      <ion-col>Name</ion-col>
+      <ion-col>Start Date</ion-col>
+      <ion-col>End Date</ion-col>
+      <ion-col>Weight Frequency</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let game of games" (click)="selectGame(game)">
+      <ion-col>{{game.id}}</ion-col>
+      <ion-col>{{game.gameName}}</ion-col>
+      <ion-col>{{game.startDate}}</ion-col>
+      <ion-col>{{game.endDate}}</ion-col>
+      <ion-col>{{game.weightFrequency}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  <form [formGroup]="memberFormGroup" *ngIf="isGameSelected">
     <!-- <ion-item button (click)="selectGameModal()">
       <ion-label>Select a game</ion-label>
       <ion-icon name="search" slot="end"></ion-icon>
     </ion-item> -->
     <ion-item>
-      <ion-label position="floating">Weight goal:</ion-label>
-      <ion-input formControlName="weightGoal" clearInput type="number"></ion-input>
+      <ion-label>Selected game: {{selectedGame.id}} - {{selectedGame.gameName}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Select weight unit:</ion-label>
-      <ion-select formControlName="weightUnit">
-        <ion-select-option value="kg">kg</ion-select-option>
-        <ion-select-option value="lb">lb</ion-select-option>
-      </ion-select>
+      <ion-label position="floating">Weight goal ({{selectedGame.weightUnit}}):</ion-label>
+      <ion-input formControlName="weightGoal" clearInput type="number"></ion-input>
     </ion-item>
-
     <ion-button (click)="applyToAGame()" [disabled]="memberFormGroup.invalid" margin-top expand="full">Apply
     </ion-button>
   </form>

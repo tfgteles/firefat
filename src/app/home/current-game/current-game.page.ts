@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
+import { UserProfile } from 'src/app/models/user-profile.model';
 import { GameDataService } from 'src/app/services/game-data.service';
 import { GameRestService } from 'src/app/services/game-rest.service';
 
@@ -13,13 +15,15 @@ export class CurrentGamePage implements OnInit {
 
   public games: Game[];
 
-  constructor(public modalController: ModalController, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
+  constructor(
+    public modalController: ModalController, 
+    private gameRestService: GameRestService, 
+    private gameDataService: GameDataService,
+    private router: Router
+    ) { }
 
-  public async ngOnInit(): Promise<void> {
-    this.gameRestService.getAllActiveGames().subscribe(resp => {
-      this.gameDataService.activeGames = resp;
-      console.log(resp);
-    });
+  public ngOnInit() { 
+    this.games = [...this.gameDataService.currentUser.membership];
   }
 
   /* public async selectGameModal(): Promise<void> {
@@ -34,8 +38,21 @@ export class CurrentGamePage implements OnInit {
     });
   } */
 
-  public changeCurrentGame() {
+  public async updateCurrentGame(preferredGameId: number) {
     console.log('Current game change button clicked');
+    let userProfile: UserProfile = {
+      id: this.gameDataService.currentUser.id,
+      userEmail: this.gameDataService.currentUser.userEmail,
+      preferredGameId: preferredGameId
+    };
+    this.gameRestService.updatePreferredGame(userProfile.id, userProfile).subscribe(() =>{
+      this.gameDataService.currentUser.preferredGameId = preferredGameId;
+      this.gameRestService.getGameDetailsById(preferredGameId).subscribe(resp => {
+        console.log(resp);
+        this.gameDataService.currentGame = {...resp};
+      });
+      this.router.navigate(['/main/home']);
+    });
   }
 
 }

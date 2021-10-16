@@ -10,5 +10,20 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>Game Id</ion-col>
+      <ion-col>Name</ion-col>
+      <ion-col>Start Date</ion-col>
+      <ion-col>End Date</ion-col>
+      <ion-col>Weight Frequency</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let game of games" (click)="updateCurrentGame(game.id)">
+      <ion-col>{{game.id}}</ion-col>
+      <ion-col>{{game.gameName}}</ion-col>
+      <ion-col>{{game.startDate}}</ion-col>
+      <ion-col>{{game.endDate}}</ion-col>
+      <ion-col>{{game.weightFrequency}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

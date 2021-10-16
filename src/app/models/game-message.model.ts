@@ -3,10 +3,8 @@ import { UserProfile } from "./user-profile.model";
 
 export interface GameMessage {
     id?: number;
-    gameId: number;
-    game?: Game;
-    userProfileId?: number;
-    userProfile?: UserProfile;
+    groupId: number; // gameId
+    playerId?: number; // userProfileId
     messageDate?: Date;
     messageText: string;
 }

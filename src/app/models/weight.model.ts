@@ -3,10 +3,8 @@ import { WeightDate } from "./weight-date.model";
 
 export interface Weight {
     id?: number;
-    memberId: number; // Related member
-    member?: Member;
-    weightDateId: number; // Related date
-    weightDate: WeightDate;
+    groupMemberId: number; // Related member - memberId
+    dateId: number; // Related date - weightDateId
     scaleImage?: string; // to be developed
     weightMeasure: number;
 }

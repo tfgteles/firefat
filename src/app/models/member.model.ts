@@ -5,11 +5,9 @@ import { UserProfile } from './user-profile.model';
 
 export interface Member {
     id?: number;
-    gameId: number;
-    game?: Game;
+    groupId: number; // gameId
     weightGoal: number;
-    userProfileId: number;
-    userProfile?: UserProfile;
+    playerId: number; // userProfileId
     applicationDate?: Date;
     responseDate?: Date;
     vacationStartDateId?: number; // WeightDateId
