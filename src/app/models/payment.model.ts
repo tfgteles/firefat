@@ -4,6 +4,6 @@ export interface Payment {
     id?: number;
     payeeId?: number; // Payee - memberId
     receiptImage?: string; // to be developed
-    paymentDate?: Date;
+    paymentDate?: Date | string;
     amountPaid: number;
 }

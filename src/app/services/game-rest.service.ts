@@ -14,7 +14,8 @@ import {
   GAME_DETAILS_PATH, 
   USER_PROFILE_UPDATE_PATH, 
   MEMBER_APPLY_PATH, 
-  USER_PROFILE_PREFERRED_GAME_PATH 
+  USER_PROFILE_PREFERRED_GAME_PATH, 
+  GAME_CREATE_PATH
 } from './constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -71,7 +72,7 @@ export class GameRestService {
   
   /** POST: add a new game to the database */
   public createGame(newGame: Game): Observable<Game> {
-    const url = BASE_URL + GAME_BASE_PATH;
+    const url = BASE_URL + GAME_CREATE_PATH;
     return this.http.post<Game>(url, newGame).pipe(
       retry(3),
       catchError(this.handleError));

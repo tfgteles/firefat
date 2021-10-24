@@ -5,6 +5,6 @@ export interface GameMessage {
     id?: number;
     groupId: number; // gameId
     playerId?: number; // userProfileId
-    messageDate?: Date;
+    messageDate?: Date | string;
     messageText: string;
 }

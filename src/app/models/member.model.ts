@@ -8,8 +8,8 @@ export interface Member {
     groupId: number; // gameId
     weightGoal: number;
     playerId: number; // userProfileId
-    applicationDate?: Date;
-    responseDate?: Date;
+    applicationDate?: Date | string;
+    responseDate?: Date | string;
     vacationStartDateId?: number; // WeightDateId
     memberStatus?: string; // Applied, Standard, Leader, Denied
     goalAchieved?: boolean;

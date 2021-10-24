@@ -8,7 +8,7 @@ export interface UserProfile {
     userName?: string;
     preferredGameId?: number; // Current/ preferred game
     userGender?: string;
-    dateOfBirth?: Date;
+    dateOfBirth?: Date | string;
     phoneNumber?: string;
     streetAddress?: string;
     city?: string;
