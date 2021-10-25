@@ -13,7 +13,7 @@ import { GameRestService } from 'src/app/services/game-rest.service';
 })
 export class CurrentGamePage implements OnInit {
 
-  public games: Game[];
+  public games: Game[] = [];
 
   constructor(
     public modalController: ModalController, 
@@ -23,7 +23,7 @@ export class CurrentGamePage implements OnInit {
     ) { }
 
   public ngOnInit() { 
-    this.games = [...this.gameDataService.currentUser.membership];
+    this.games = [...this.gameDataService.currentUser.membership.filter(g => g.id !== this.gameDataService.currentUser.preferredGameId)];
   }
 
   /* public async selectGameModal(): Promise<void> {
@@ -39,7 +39,6 @@ export class CurrentGamePage implements OnInit {
   } */
 
   public async updateCurrentGame(preferredGameId: number) {
-    console.log('Current game change button clicked');
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,

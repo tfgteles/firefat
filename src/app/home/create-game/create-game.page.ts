@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Game } from 'src/app/models/game.model';
 import { GameDataService } from 'src/app/services/game-data.service';
 import { GameRestService } from 'src/app/services/game-rest.service';
@@ -14,14 +15,16 @@ export class CreateGamePage implements OnInit {
   public gameFormGroup: FormGroup;
   public newGame: Game;
 
-  constructor(private formBuilder: FormBuilder, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
+  constructor(private formBuilder: FormBuilder, 
+    private gameRestService: GameRestService,
+    private gameDataService: GameDataService,
+    private router: Router) { }
 
   ngOnInit() {
     this.gameFormGroup = this.formBuilder.group({
       gameName: ['', Validators.required],
       gameDescription: [''],
       startDate: ['', Validators.required],
-      // endDate: [''],
       noWeightDays: ['', Validators.required],
       weightFrequency: ['', Validators.required],
       minWeightLoss: ['', Validators.required],
@@ -30,7 +33,6 @@ export class CreateGamePage implements OnInit {
       currency: ['', Validators.required], // CAD, BRL, USD
       vacationLength: ['', Validators.required],
       lastWeightPaid: [false],
-      // isActive: [''],
       weightGoal: ['', Validators.required]
     });
     this.newGame = {weightDates: []};
@@ -58,6 +60,8 @@ export class CreateGamePage implements OnInit {
     console.log(this.newGame);
     this.gameRestService.createGame(this.newGame).subscribe(resp => {
       console.log(resp);
+      this.gameDataService.currentUser.membership.push({...resp});
+      this.router.navigate(['/main/home']);
     });
   }
 

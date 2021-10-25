@@ -5,17 +5,16 @@ import { UserProfile } from '../models/user-profile.model';
 import { 
   BASE_URL, 
   GAME_ACTIVE_PATH, 
-  GAME_BASE_PATH, 
   MEMBER_BASE_PATH, 
   MEMBER_VACATION_PATH, 
-  PAYMENT_BASE_PATH, 
   USER_PROFILE_LOGGED_IN_PATH, 
-  WEIGHT_BASE_PATH, 
   GAME_DETAILS_PATH, 
   USER_PROFILE_UPDATE_PATH, 
   MEMBER_APPLY_PATH, 
   USER_PROFILE_PREFERRED_GAME_PATH, 
-  GAME_CREATE_PATH
+  GAME_CREATE_PATH,
+  WEIGHT_ONDATE_PATH,
+  PAYMENT_PLAYER_PATH
 } from './constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -30,6 +29,7 @@ export class GameRestService {
 
   constructor(private http: HttpClient) { }
 
+  /** GET: get the logged in user profile */
   public getLoggedInUserProfile(): Observable<UserProfile> {
     const url = BASE_URL + USER_PROFILE_LOGGED_IN_PATH;
     return this.http.get<UserProfile>(url).pipe(
@@ -38,6 +38,7 @@ export class GameRestService {
     );
   }
   
+  /** GET: get game details by game Id */
   public getGameDetailsById(gameId: number): Observable<Game> {
     const url = BASE_URL + GAME_DETAILS_PATH + gameId;
     return this.http.get<Game>(url).pipe(
@@ -46,6 +47,7 @@ export class GameRestService {
     );
   }
   
+  /** GET: get all active games */
   public getAllActiveGames(): Observable<Game[]> {
     const url = BASE_URL + GAME_ACTIVE_PATH;
     return this.http.get<Game[]>(url).pipe(
@@ -54,6 +56,7 @@ export class GameRestService {
     );
   }
   
+  /** PUT: update the logged in user profile */
   public updateUserProfile(userProfileId: number, editedUserProfile: UserProfile): Observable<UserProfile> {
     const url = BASE_URL + USER_PROFILE_UPDATE_PATH + userProfileId;
     return this.http.put<UserProfile>(url, editedUserProfile).pipe(
@@ -62,6 +65,7 @@ export class GameRestService {
     );
   }
 
+  /** PUT: updated the preferred, or current, game of the logged in user progile */
   public updatePreferredGame(userProfileId: number, editedUserProfile: UserProfile): Observable<UserProfile> {
     const url = BASE_URL + USER_PROFILE_PREFERRED_GAME_PATH + userProfileId;
     return this.http.put<UserProfile>(url, editedUserProfile).pipe(
@@ -104,7 +108,7 @@ export class GameRestService {
   
   /** POST: add a new weight to the database */
   public sendWeight(newWeight: Weight): Observable<Weight> {
-    const url = BASE_URL + WEIGHT_BASE_PATH;
+    const url = BASE_URL + WEIGHT_ONDATE_PATH;
     return this.http.post<Weight>(url, newWeight).pipe(
       retry(3),
       catchError(this.handleError)); // this.handleError('addHero', hero)
@@ -112,12 +116,13 @@ export class GameRestService {
 
   /** POST: add a new payment to the database */
   public sendPayment(newPayment: Payment): Observable<Payment> {
-    const url = BASE_URL + PAYMENT_BASE_PATH;
+    const url = BASE_URL + PAYMENT_PLAYER_PATH;
     return this.http.post<Payment>(url, newPayment).pipe(
       retry(3),
       catchError(this.handleError)); // this.handleError('addHero', hero)
   }
 
+  /** Callback function in case of error response */
   private handleError(error: HttpErrorResponse) {
     console.log(error);
     console.log(error.status);
@@ -133,25 +138,5 @@ export class GameRestService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  /* private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  } */
 
 }

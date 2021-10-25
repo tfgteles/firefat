@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
 import { Member } from 'src/app/models/member.model';
@@ -16,14 +17,16 @@ export class ApplyGamePage implements OnInit {
   public memberFormGroup: FormGroup;
   public newMember: Member;
   public games: Game[];
-  public selectedGame: Game;
-  public isGameSelected: boolean;
+  public selectedGameName: string = '';
+  public selectedGameId: number = 0;
+  public selectedGameWeightUnit: string = '';
 
   constructor(
     public modalController: ModalController, 
     private formBuilder: FormBuilder, 
     private gameRestService: GameRestService, 
-    private gameDataService: GameDataService
+    private gameDataService: GameDataService,
+    private router: Router
     ) { 
       this.memberFormGroup = this.formBuilder.group({
         weightGoal: ['', Validators.required]
@@ -32,7 +35,6 @@ export class ApplyGamePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
 
-    this.isGameSelected = false;
 
     this.gameRestService.getAllActiveGames().subscribe(resp => {
       this.gameDataService.activeGames = [...resp];
@@ -58,7 +60,7 @@ export class ApplyGamePage implements OnInit {
   public applyToAGame(): void {
 
     let member: Member = {
-      groupId: this.selectedGame.id,
+      groupId: this.selectedGameId,
       playerId: this.gameDataService.currentUser.id,
       weightGoal: this.memberFormGroup.value.weightGoal
     };
@@ -67,13 +69,20 @@ export class ApplyGamePage implements OnInit {
 
     this.gameRestService.applyToAGame(member).subscribe(resp => {
       console.log(resp);
-      this.gameDataService.currentUser.membership.push(this.selectedGame);
+      this.gameDataService.currentUser.membership.push(this.games.find(g => g.id === this.selectedGameId));
+      this.router.navigate(['/main/home']);
     });
   }
 
   public selectGame(game: Game): void {
-    this.isGameSelected = true;
-    this.selectedGame = game;
+    this.selectedGameId = game.id;
+    this.selectedGameName = game.gameName;
+    this.selectedGameWeightUnit = game.weightUnit;
+  }
+
+  public clearSelection() {
+    this.selectedGameId = 0;
+    this.selectedGameName = '';
   }
 
 }

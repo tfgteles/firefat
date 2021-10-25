@@ -34,7 +34,11 @@ export const MEMBER_APPLY_PATH: string = 'members/apply';
 export const MEMBER_VACATION_PATH: string = 'members/vacation/';
 
 // Weight
-export const WEIGHT_BASE_PATH: string = 'members';
+export const WEIGHT_BASE_PATH: string = 'weights';
+
+export const WEIGHT_ONDATE_PATH: string = 'weights/ondate';
 
 // Payment
 export const PAYMENT_BASE_PATH: string = 'payments';
+
+export const PAYMENT_PLAYER_PATH: string = 'payments/player';

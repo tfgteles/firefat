@@ -10,7 +10,28 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <p>Page under construction</p>
-  </ion-text>
+  <form [formGroup]="paymentFormGroup" *ngIf="memberId > 0">
+    <ion-item>
+      <ion-label position="floating">Amount paid:</ion-label>
+      <ion-input formControlName="amountPaid" clearInput type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Payment date:</ion-label>
+      <ion-datetime 
+          formControlName="paymentDate" 
+          displayFormat="YYYY-MM-DD"
+          clearInput>
+      </ion-datetime>
+    </ion-item>
+
+    <ion-button (click)="enterPayment()" [disabled]="paymentFormGroup.invalid" margin-top expand="full">
+      SEND PAYMENT
+    </ion-button>
+  </form>
+
+  <ion-item *ngIf="memberId === 0" color="warning">
+    <ion-label>Sorry, member not found.</ion-label>
+  </ion-item>
+
+  
 </ion-content>

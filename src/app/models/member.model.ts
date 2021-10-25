@@ -1,7 +1,5 @@
 import { Weight } from './weight.model';
 import { Payment } from './payment.model';
-import { Game } from './game.model';
-import { UserProfile } from './user-profile.model';
 
 export interface Member {
     id?: number;
