@@ -17,7 +17,7 @@ export class PrizeComponent implements OnInit {
   constructor(private gameDataService: GameDataService) { }
 
   ngOnInit() {
-    this.playersDebt = this.gameDataService.getPlayersDebt();
+    this.playersDebt = [...this.gameDataService.getPlayersDebt()];
     this.currency = this.gameDataService.currentGame.currency;
     this.gamePrize = 0;
     this.gameCash = 0;

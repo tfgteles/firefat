@@ -131,12 +131,12 @@ export class GameDataService {
         progress[i].charge = this.currentGame.gameFee;
         progress[i].weightLoss = 0;
         progress[i].percentageLoss = 0;
-      } else if (progress[i].weightMeasure <= weightGoal) { // Goal achieved
+      } else if (progress[i].weightMeasure > 0 && progress[i].weightMeasure <= weightGoal) { // Goal achieved
         progress[i].charge = 0;
         progress[i].description = 'Congratulations!!!';
         progress[i].weightLoss = initialWeight - progress[i].weightMeasure;
         progress[i].percentageLoss = (initialWeight - progress[i].weightMeasure) * 100 / initialWeight;
-      } else if (minWeight - progress[i].weightMeasure >= minWeightLoss) { // Lost at least the minimum
+      } else if (progress[i].weightMeasure > 0 && minWeight - progress[i].weightMeasure >= minWeightLoss) { // Lost at least the minimum
         progress[i].charge = 0;
         progress[i].description = 'Good job!';
         progress[i].weightLoss = initialWeight - progress[i].weightMeasure;
@@ -146,6 +146,9 @@ export class GameDataService {
         progress[i].description = 'Oooops!';
         progress[i].weightLoss = initialWeight - progress[i].weightMeasure;
         progress[i].percentageLoss = (initialWeight - progress[i].weightMeasure) * 100 / initialWeight;
+      }
+      if (progress[i].weightMeasure > 0 && progress[i].weightMeasure < minWeight) {
+        minWeight = progress[i].weightMeasure;
       }
     }
     if (progress.length === this.sortedWeightDates.length) {
@@ -219,7 +222,7 @@ export class GameDataService {
         isGoalAchieved: (currentWeight > 0? currentWeight <= p.weightGoal: false)
       });
     }
-    ranking.sort((p1, p2) => p1.percentageLoss - p2.percentageLoss)
+    ranking.sort((p1, p2) => p2.percentageLoss - p1.percentageLoss)
     for (let i = 0; i < ranking.length; i++) {
       ranking[i].order = i + 1;
     }
