@@ -22,8 +22,8 @@
     <ion-row *ngFor="let game of games" (click)="selectGame(game)">
       <ion-col>{{game.id}}</ion-col>
       <ion-col>{{game.gameName}}</ion-col>
-      <ion-col>{{game.startDate}}</ion-col>
-      <ion-col>{{game.endDate}}</ion-col>
+      <ion-col>{{game.startDate | date: 'mediumDate'}}</ion-col>
+      <ion-col>{{game.endDate | date: 'mediumDate'}}</ion-col>
       <ion-col>{{game.weightFrequency}}</ion-col>
     </ion-row>
   </ion-grid>

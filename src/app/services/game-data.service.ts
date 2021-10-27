@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GameDate, PlayerDto, PlayerProgress, PlayerRank } from '../models/game-dtos.model';
+import { GameDate, PlayerDebt, PlayerDto, PlayerProgress, PlayerRank } from '../models/game-dtos.model';
 import { Game } from '../models/game.model';
 import { Member } from '../models/member.model';
+import { Payment } from '../models/payment.model';
 import { UserProfile } from '../models/user-profile.model';
 import { WeightDate } from '../models/weight-date.model';
 import { Weight } from '../models/weight.model';
@@ -100,7 +101,7 @@ export class GameDataService {
     let weightGoal: number = this.currentGame.members.find(m => m.id === memberId).weightGoal;
     for (let d of this.sortedWeightDates) {
       if (dateNow.valueOf() - d.weightDateDate.valueOf() < 0) {break;}
-      let weight: Weight = weights.find(w => w.dateId = d.weightDateId);
+      let weight: Weight = weights.find(w => w.dateId === d.weightDateId);
       let weightMeasure = weight? weight.weightMeasure : 0;
       console.log(weightMeasure);
       progress.push({
@@ -116,19 +117,20 @@ export class GameDataService {
     minWeight = initialWeight;
     progress[0].description = 'Initial weight';
     progress[0].charge = 0;
-    progress[0].weightLoss = 'N.A.';
-    progress[0].percentageLoss = 'N.A.';
+    progress[0].weightLoss = 0;
+    progress[0].percentageLoss = 0;
     for (let i = 1; i < progress.length; i++) {
       if (vacationDatesId.includes(progress[i].weightDateId)) { // Vacation
         progress[i].charge = 0;
         progress[i].description = 'Vacation';
-        progress[i].weightLoss = 'N.A.';
-        progress[i].percentageLoss = 'N.A.';
+        progress[i].weightMeasure = 0;
+        progress[i].weightLoss = 0;
+        progress[i].percentageLoss = 0;
       } else if (progress[i].weightMeasure === 0) { // WO
         progress[i].description = 'WO';
         progress[i].charge = this.currentGame.gameFee;
-        progress[i].weightLoss = 'N.A.';
-        progress[i].percentageLoss = 'N.A.';
+        progress[i].weightLoss = 0;
+        progress[i].percentageLoss = 0;
       } else if (progress[i].weightMeasure <= weightGoal) { // Goal achieved
         progress[i].charge = 0;
         progress[i].description = 'Congratulations!!!';
@@ -146,7 +148,7 @@ export class GameDataService {
         progress[i].percentageLoss = (initialWeight - progress[i].weightMeasure) * 100 / initialWeight;
       }
     }
-    if (progress.length === weights.length) {
+    if (progress.length === this.sortedWeightDates.length) {
       progress[progress.length - 1].description = 'Last weight';
       if (!this.currentGame.lastWeightPaid) {
         progress[progress.length - 1].charge = 0;
@@ -189,7 +191,6 @@ export class GameDataService {
     for (let i = 0; i < this.sortedWeightDates.length; i++) {
       this.sortedWeightDates[i].order = i +1;
     }
-    console.log(this.sortedWeightDates);
   }
 
   /**
@@ -223,6 +224,35 @@ export class GameDataService {
       ranking[i].order = i + 1;
     }
     return ranking;
+  }
+
+  /**
+   * Returns the debt of each player, and how much they have already paid
+   */
+  public getPlayersDebt(): PlayerDebt[] {
+    let debts: PlayerDebt[] = [];
+    for (let p of this.players) {
+      let progress: PlayerProgress[] = this.playerProgressToDate(p.playerMemberId);
+      let debt: number = 0;
+      for (let d of progress) {
+        debt += d.charge;
+      }
+      let paid: number = 0;
+      let payments: Payment[] = this.currentGame.members.find(m => m.id === p.playerMemberId)?.payments;
+      for (let c of payments) {
+        paid += c.amountPaid;
+      }
+      debts.push({
+        player: {...p},
+        totalDebt: debt,
+        totalPaid: paid
+      });
+    }
+    debts.sort((d1, d2) => d2.totalDebt - d1.totalDebt);
+    for (let i = 0; i < debts.length; i++) {
+      debts[i].order = i + 1;
+    }
+    return debts;
   }
 
 }

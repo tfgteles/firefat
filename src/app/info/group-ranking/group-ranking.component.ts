@@ -16,12 +16,8 @@ export class GroupRankingComponent implements OnInit {
   constructor(private gameDataService: GameDataService, private gameRestService: GameRestService) { }
 
   ngOnInit() {
-    this.gameRestService.getPlayersByGameId(this.gameDataService.currentGame.id).subscribe(resp => {
-      console.log(resp);
-      this.gameDataService.players = [...resp];
-      this.ranking = this.gameDataService.getRanking();
-      this.weightUnit = this.gameDataService.currentGame.weightUnit;
-    });
+    this.ranking = this.gameDataService.getRanking();
+    this.weightUnit = this.gameDataService.currentGame.weightUnit;
   }
 
 }

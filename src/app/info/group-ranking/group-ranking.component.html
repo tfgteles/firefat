@@ -23,11 +23,11 @@
     <ion-row *ngFor="let r of ranking">
       <ion-col>{{r.order}}</ion-col>
       <ion-col>{{r.player.userName}}</ion-col>
-      <ion-col>{{r.initialWeight}}</ion-col>
-      <ion-col>{{r.player.weightGoal}}</ion-col>
-      <ion-col>{{r.weightMeasure}}</ion-col>
-      <ion-col>{{r.weightLoss}}</ion-col>
-      <ion-col>{{r.percentageLoss}}</ion-col>
+      <ion-col>{{r.initialWeight | number: '1.1-1'}}</ion-col>
+      <ion-col>{{r.player.weightGoal | number: '1.1-1'}}</ion-col>
+      <ion-col>{{(r.weightMeasure === 0)? '' : r.weightMeasure | number: '1.1-1'}}</ion-col>
+      <ion-col>{{(r.weightMeasure === 0)? '' : r.weightLoss | number: '1.1-1'}}</ion-col>
+      <ion-col>{{(r.weightMeasure === 0)? '' : r.percentageLoss | number: '1.1-1'}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

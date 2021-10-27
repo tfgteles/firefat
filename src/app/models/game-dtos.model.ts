@@ -2,10 +2,10 @@ export interface PlayerProgress {
     id: number | string;
     memberId: number;
     weightDateId: number;
-    weightDateDate: Date | string;
+    weightDateDate: Date;
     weightMeasure: number;
-    weightLoss?: number | string;
-    percentageLoss?: number | string;
+    weightLoss?: number;
+    percentageLoss?: number;
     charge?: number;
     description?: string;
 }
@@ -35,4 +35,11 @@ export interface PlayerRank {
   weightLoss?: number;
   percentageLoss?: number;
   isGoalAchieved?: boolean
+}
+
+export interface PlayerDebt {
+  order?: number;
+  player?: PlayerDto;
+  totalDebt?: number;
+  totalPaid?: number;
 }
