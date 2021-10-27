@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerProgress } from 'src/app/models/game-dtos.model';
+import { GameDataService } from 'src/app/services/game-data.service';
 
 @Component({
   selector: 'app-personal-progress',
@@ -7,8 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalProgressComponent implements OnInit {
 
-  constructor() { }
+  public progress: PlayerProgress[];
+  public weightUnit: string;
 
-  ngOnInit() {}
+  constructor(private gameDataService: GameDataService) { }
+
+  ngOnInit() {
+    let memberId = this.gameDataService.currentMemberId();
+    this.progress = [...this.gameDataService.playerProgressToDate(memberId)].reverse();
+    this.weightUnit = this.gameDataService.currentGame.weightUnit;
+  }
 
 }

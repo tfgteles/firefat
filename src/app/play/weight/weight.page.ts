@@ -24,26 +24,8 @@ export class WeightPage implements OnInit {
       weightMeasure: ['', Validators.required]
     });
 
-    let dateNow = new Date();
-    
-    for (let w of this.gameDataService.currentGame.weightDates) {
-      let scheduledDate = new Date(w.scheduledDate);
-      if (scheduledDate.getDate() === dateNow.getDate() 
-        && scheduledDate.getMonth() === dateNow.getMonth()
-        && scheduledDate.getFullYear() === dateNow.getFullYear()) {
-          this.dateId = w.id;
-          console.log(this.dateId);
-          break;
-        }
-    }
-
-    for (let m of this.gameDataService.currentGame.members) {
-      if (m.playerId === this.gameDataService.currentUser.id) {
-        this.memberId = m.id;
-        console.log(this.memberId);
-        break;
-      }
-    }
+    this.dateId = this.gameDataService.todayWeightDateId();
+    this.memberId = this.gameDataService.currentMemberId();
 
   }
 

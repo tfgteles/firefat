@@ -10,7 +10,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <p>Page under construction</p>
-  </ion-text>
+  <ion-grid>
+    <ion-row>
+      <ion-col>#</ion-col>
+      <ion-col>Date</ion-col>
+      <ion-col>Weight Loss ({{weightUnit}})</ion-col>
+      <ion-col>Weigh Loss (%)</ion-col>
+      <ion-col>Charge</ion-col>
+      <ion-col>Comment</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let p of progress">
+      <ion-col>{{p.id}}</ion-col>
+      <ion-col>{{p.weightDateDate}}</ion-col>
+      <ion-col>{{p.weightLoss}}</ion-col>
+      <ion-col>{{p.percentageLoss}}</ion-col>
+      <ion-col>{{p.charge}}</ion-col>
+      <ion-col>{{p.description}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

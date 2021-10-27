@@ -14,13 +14,15 @@ import {
   USER_PROFILE_PREFERRED_GAME_PATH, 
   GAME_CREATE_PATH,
   WEIGHT_ONDATE_PATH,
-  PAYMENT_PLAYER_PATH
+  PAYMENT_PLAYER_PATH,
+  GAME_PLAYERS_PATH
 } from './constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Member } from '../models/member.model';
 import { Weight } from '../models/weight.model';
 import { Payment } from '../models/payment.model';
+import { PlayerDto } from '../models/game-dtos.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +53,15 @@ export class GameRestService {
   public getAllActiveGames(): Observable<Game[]> {
     const url = BASE_URL + GAME_ACTIVE_PATH;
     return this.http.get<Game[]>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  /** GET: get all players by game Id */
+  public getPlayersByGameId(gameId: number): Observable<PlayerDto[]> {
+    const url = BASE_URL + GAME_PLAYERS_PATH + gameId;
+    return this.http.get<PlayerDto[]>(url).pipe(
       retry(3),
       catchError(this.handleError)
     );

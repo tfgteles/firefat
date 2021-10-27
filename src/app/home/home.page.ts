@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
       if (this.gameDataService.currentUser.preferredGameId > 0) {
         this.gameRestService.getGameDetailsById(this.gameDataService.currentUser.preferredGameId).subscribe(resp => {
           this.gameDataService.currentGame = {...resp};
+          this.gameDataService.setSortedWeightDates();
           this.currentGameMessage = `You are currently playing ${resp.gameName}. Click here to change the game.`;
           console.log(resp);
         });

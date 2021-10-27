@@ -10,7 +10,24 @@
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <p>Page under construction</p>
-  </ion-text>
+  <ion-grid>
+    <ion-row>
+      <ion-col>#</ion-col>
+      <ion-col>Name</ion-col>
+      <ion-col>Initial Weigh ({{weightUnit}})</ion-col>
+      <ion-col>Goal ({{weightUnit}})</ion-col>
+      <ion-col>Weight ({{weightUnit}})</ion-col>
+      <ion-col>Weight Loss ({{weightUnit}})</ion-col>
+      <ion-col>Weigh Loss (%)</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let r of ranking">
+      <ion-col>{{r.order}}</ion-col>
+      <ion-col>{{r.player.userName}}</ion-col>
+      <ion-col>{{r.initialWeight}}</ion-col>
+      <ion-col>{{r.player.weightGoal}}</ion-col>
+      <ion-col>{{r.weightMeasure}}</ion-col>
+      <ion-col>{{r.weightLoss}}</ion-col>
+      <ion-col>{{r.percentageLoss}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -49,6 +49,7 @@ export class CurrentGamePage implements OnInit {
       this.gameRestService.getGameDetailsById(preferredGameId).subscribe(resp => {
         console.log(resp);
         this.gameDataService.currentGame = {...resp};
+        this.gameDataService.setSortedWeightDates();
       });
       this.router.navigate(['/main/home']);
     });

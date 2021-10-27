@@ -25,6 +25,8 @@ export const GAME_ACTIVE_PATH: string = 'games/active';
 
 export const GAME_CREATE_PATH: string = 'games/create';
 
+export const GAME_PLAYERS_PATH: string = 'games/players/';
+
 
 // Member
 export const MEMBER_BASE_PATH: string = 'members';
