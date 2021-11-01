@@ -87,6 +87,23 @@ export class GameDataService {
   }
 
   /**
+   * Set the array of players for the current game
+   */
+  public setCurrentGamePlayers() {
+    this.players = [];
+    this.currentGame.members.forEach(m => {
+      this.players.push({
+        playerProfileId: m.playerId,
+        playerMemberId: m.id,
+        firstName: m.firstName,
+        lastName: m.lastName,
+        userEmail: m.userEmail,
+        userName: m.userName
+      });
+    });
+  }
+
+  /**
    * Build an array of PlayerProgress, what has happened to date, based on the game rules
    * @returns 
    */

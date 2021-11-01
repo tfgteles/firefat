@@ -14,6 +14,8 @@ export class WeightPage implements OnInit {
   public weightFormGroup: FormGroup;
   public dateId: number = 0;
   public memberId: number = 0;
+  public fileName: string = '';
+  public file: File = null;
 
   constructor(private formBuilder: FormBuilder, 
     private gameRestService: GameRestService,
@@ -30,17 +32,26 @@ export class WeightPage implements OnInit {
   }
 
   public enterWeight() {
-    console.log('Enter weight button clicked');
-    let weight: Weight = {
-      groupMemberId: this.memberId,
-      dateId: this.dateId,
-      weightMeasure: this.weightFormGroup.get('weightMeasure').value
-    };
-    this.gameRestService.sendWeight(weight).subscribe(resp => {
+    const formData = new FormData();
+    formData.append('groupMemberId', this.memberId.toString());
+    formData.append('dateId', this.dateId.toString());
+    formData.append('weightMeasure', this.weightFormGroup.get('weightMeasure').value.toString());
+    formData.append('scaleImage', this.file, this.fileName);
+    this.gameRestService.sendWeight(formData).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).weights.push({...resp});
     });
 
+  }
+
+  /**
+   * Upload the file chosen by the user
+   * @param evt 
+   */
+  public loadImage(evt) {
+    console.log(evt.target.files[0]);
+    this.file = <File>evt.target.files[0];
+    this.fileName = this.file.name;
   }
 
 }

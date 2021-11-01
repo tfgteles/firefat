@@ -50,11 +50,8 @@ export class CurrentGamePage implements OnInit {
         console.log(resp);
         this.gameDataService.currentGame = {...resp};
         this.gameDataService.setSortedWeightDates();
-        this.gameRestService.getPlayersByGameId(this.gameDataService.currentGame.id).subscribe(resp => {
-          console.log(resp);
-          this.gameDataService.players = [...resp];
-          this.router.navigate(['/main/home']);
-        });
+        this.gameDataService.setCurrentGamePlayers();
+        this.router.navigate(['/main/home']);
       });
     });
   }

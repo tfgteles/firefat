@@ -118,17 +118,17 @@ export class GameRestService {
   }
   
   /** POST: add a new weight to the database */
-  public sendWeight(newWeight: Weight): Observable<Weight> {
+  public sendWeight(formData: FormData): Observable<Weight> {
     const url = BASE_URL + WEIGHT_ONDATE_PATH;
-    return this.http.post<Weight>(url, newWeight).pipe(
+    return this.http.post<Weight>(url, formData).pipe(
       retry(3),
       catchError(this.handleError)); // this.handleError('addHero', hero)
   }
 
   /** POST: add a new payment to the database */
-  public sendPayment(newPayment: Payment): Observable<Payment> {
+  public sendPayment(formData: FormData): Observable<Payment> {
     const url = BASE_URL + PAYMENT_PLAYER_PATH;
-    return this.http.post<Payment>(url, newPayment).pipe(
+    return this.http.post<Payment>(url, formData).pipe(
       retry(3),
       catchError(this.handleError)); // this.handleError('addHero', hero)
   }

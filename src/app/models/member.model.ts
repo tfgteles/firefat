@@ -11,6 +11,10 @@ export interface Member {
     vacationStartDateId?: number; // WeightDateId
     memberStatus?: string; // Applied, Standard, Leader, Denied
     goalAchieved?: boolean;
+    firstName?: string;
+    lastName?: string;
+    userName?: string;
+    userEmail?: string;
     weights?: Weight[];
     payments?: Payment[];
 }

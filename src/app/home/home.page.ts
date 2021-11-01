@@ -29,9 +29,7 @@ export class HomePage implements OnInit {
           this.gameDataService.currentGame = {...resp};
           this.gameDataService.setSortedWeightDates();
           // this.currentGameMessage = `You are currently playing ${resp.gameName}. Click here to change the game.`;
-          this.gameRestService.getPlayersByGameId(this.gameDataService.currentGame.id).subscribe(resp => {
-            this.gameDataService.players = [...resp];
-          });
+          this.gameDataService.setCurrentGamePlayers();
         });
       } else {
         // this.currentGameMessage = 'You do not have a game selected. Click here to select one.';

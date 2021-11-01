@@ -13,6 +13,8 @@ export class PaymentPage implements OnInit {
 
   public paymentFormGroup: FormGroup;
   public memberId: number = 0;
+  public fileName: string = '';
+  public file: File = null;
 
   constructor(private formBuilder: FormBuilder, 
     private gameRestService: GameRestService,
@@ -24,27 +26,32 @@ export class PaymentPage implements OnInit {
       amountPaid: ['', Validators.required]
     });
 
-    for (let m of this.gameDataService.currentGame.members) {
-      if (m.playerId === this.gameDataService.currentUser.id) {
-        this.memberId = m.id;
-        console.log(this.memberId);
-        break;
-      }
-    }
+    this.memberId = this.gameDataService.currentMemberId();
 
   }
 
   public enterPayment() {
-    let payment: Payment = {
-      payeeId: this.memberId,
-      paymentDate: this.paymentFormGroup.get('paymentDate').value,
-      amountPaid: this.paymentFormGroup.get('amountPaid').value
-    };
+    const formData = new FormData();
+    formData.append('payeeId', this.memberId.toString());
+    formData.append('paymentDate', this.paymentFormGroup.get('paymentDate').value);
+    formData.append('amountPaid', this.paymentFormGroup.get('amountPaid').value.toString());
+    formData.append('receiptImage', this.file, this.fileName);
     
-    this.gameRestService.sendPayment(payment).subscribe(resp => {
+    this.gameRestService.sendPayment(formData).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).payments.push({...resp});
     });
   }
+
+  /**
+   * Upload the file chosen by the user
+   * @param evt 
+   */
+   public loadImage(evt) {
+    console.log(evt.target.files[0]);
+    this.file = <File>evt.target.files[0];
+    this.fileName = this.file.name;
+  }
+
 
 }
