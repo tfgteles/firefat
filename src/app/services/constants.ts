@@ -44,3 +44,6 @@ export const WEIGHT_ONDATE_PATH: string = 'weights/ondate';
 export const PAYMENT_BASE_PATH: string = 'payments';
 
 export const PAYMENT_PLAYER_PATH: string = 'payments/player';
+
+// Game Message
+export const GAME_MESSAGE_BASE_PATH: string = 'gamemessages';

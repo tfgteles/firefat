@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameDate, PlayerDebt, PlayerDto, PlayerProgress, PlayerRank } from '../models/game-dtos.model';
+import { GameDate, MessageDto, PlayerDebt, PlayerDto, PlayerProgress, PlayerRank } from '../models/game-dtos.model';
 import { Game } from '../models/game.model';
 import { Member } from '../models/member.model';
 import { Payment } from '../models/payment.model';
@@ -98,7 +98,7 @@ export class GameDataService {
         firstName: m.firstName,
         lastName: m.lastName,
         userEmail: m.userEmail,
-        userName: m.userName
+        userName: m.userName ? m.userName : m.firstName ? m.firstName : m.userEmail
       });
     });
   }
@@ -273,6 +273,19 @@ export class GameDataService {
       debts[i].order = i + 1;
     }
     return debts;
+  }
+
+  public getGameMessages(): MessageDto[] {
+    let messages: MessageDto[] = [];
+    for (let m of this.currentGame.gameMessages) {
+      messages.push({
+        player: this.players.find(p => p.playerProfileId === m.playerId),
+        messageDate: new Date(m.messageDate),
+        text: m.messageText
+      });
+    }
+    messages.sort((m1, m2) => m2.messageDate.valueOf() - m1.messageDate.valueOf());
+    return messages;
   }
 
 }

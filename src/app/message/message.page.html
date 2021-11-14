@@ -5,5 +5,23 @@
 </ion-header> -->
 
 <ion-content>
+  <ion-list>
+    <ion-list-header>Messages</ion-list-header>
+    <ion-item *ngFor="let message of gameMessages">
+      <!-- <ion-avatar slot="start">
+        <img src="">
+      </ion-avatar> -->
+      <ion-label>
+        <h4>{{message.player.userName}} - {{message.messageDate | date: 'mediumDate'}}</h4>
+        <p>{{message.text}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-item>
+    <ion-textarea #newMessage rows="1" cols="50" placeholder="Message"></ion-textarea>
+    <ion-button (click)="sendMessage(newMessage.value)" [disabled]="newMessage.value === ''">
+      <ion-icon slot="icon-only" fill="clear" name="caret-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
 
 </ion-content>

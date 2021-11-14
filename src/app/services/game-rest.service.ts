@@ -15,7 +15,8 @@ import {
   GAME_CREATE_PATH,
   WEIGHT_ONDATE_PATH,
   PAYMENT_PLAYER_PATH,
-  GAME_PLAYERS_PATH
+  GAME_PLAYERS_PATH,
+  GAME_MESSAGE_BASE_PATH
 } from './constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -23,6 +24,7 @@ import { Member } from '../models/member.model';
 import { Weight } from '../models/weight.model';
 import { Payment } from '../models/payment.model';
 import { PlayerDto } from '../models/game-dtos.model';
+import { GameMessage } from '../models/game-message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -129,6 +131,14 @@ export class GameRestService {
   public sendPayment(formData: FormData): Observable<Payment> {
     const url = BASE_URL + PAYMENT_PLAYER_PATH;
     return this.http.post<Payment>(url, formData).pipe(
+      retry(3),
+      catchError(this.handleError)); // this.handleError('addHero', hero)
+  }
+
+  /** POST: a message to the database */
+  public sendMessage(gameMessage: GameMessage): Observable<GameMessage> {
+    const url = BASE_URL + GAME_MESSAGE_BASE_PATH;
+    return this.http.post<GameMessage>(url, gameMessage).pipe(
       retry(3),
       catchError(this.handleError)); // this.handleError('addHero', hero)
   }

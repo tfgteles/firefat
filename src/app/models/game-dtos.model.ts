@@ -43,3 +43,10 @@ export interface PlayerDebt {
   totalDebt?: number;
   totalPaid?: number;
 }
+
+export interface MessageDto {
+  id?: number;
+  player?: PlayerDto;
+  messageDate?: Date;
+  text?: string;
+}
