@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerRank } from 'src/app/models/game-dtos.model';
 import { GameDataService } from 'src/app/services/game-data.service';
-import { GameRestService } from 'src/app/services/game-rest.service';
 
 @Component({
   selector: 'app-group-ranking',
@@ -13,7 +12,7 @@ export class GroupRankingComponent implements OnInit {
   public ranking: PlayerRank[];
   public weightUnit: string;
 
-  constructor(private gameDataService: GameDataService, private gameRestService: GameRestService) { }
+  constructor(private gameDataService: GameDataService) { }
 
   ngOnInit() {
     this.ranking = this.gameDataService.getRanking();

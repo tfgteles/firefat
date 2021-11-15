@@ -25,13 +25,14 @@ import { Weight } from '../models/weight.model';
 import { Payment } from '../models/payment.model';
 import { PlayerDto } from '../models/game-dtos.model';
 import { GameMessage } from '../models/game-message.model';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameRestService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public loadingController: LoadingController) { }
 
   /** GET: get the logged in user profile */
   public getLoggedInUserProfile(): Observable<UserProfile> {
@@ -145,6 +146,7 @@ export class GameRestService {
 
   /** Callback function in case of error response */
   private handleError(error: HttpErrorResponse) {
+    this.closeLoading();
     console.log(error);
     console.log(error.status);
     if (error.status === 0) {
@@ -157,6 +159,22 @@ export class GameRestService {
     }
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
+  }
+
+  public startLoading() {
+    this.loadingController.create({
+      message: "Loading..."
+    }).then((response) => {
+      response.present();
+    });
+  }
+
+  public closeLoading() {
+    this.loadingController.dismiss().then(resp => {
+      console.log('Loader closed!', resp);
+    }).catch(err => {
+      console.log('Error ocurred: ', err);
+    });
   }
 
 

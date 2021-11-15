@@ -39,6 +39,7 @@ export class CreateGamePage implements OnInit {
   }
 
   public createGame() {
+    this.gameRestService.startLoading();
     console.log('Create button clicked');
     console.log(this.gameFormGroup.value);
     const gameInput = {...this.gameFormGroup.value};
@@ -61,6 +62,7 @@ export class CreateGamePage implements OnInit {
     this.gameRestService.createGame(this.newGame).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentUser.membership.push({...resp});
+      this.gameRestService.closeLoading();
       this.router.navigate(['/main/home']);
     });
   }

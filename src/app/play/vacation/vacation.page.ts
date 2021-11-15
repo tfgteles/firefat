@@ -34,12 +34,14 @@ export class VacationPage implements OnInit {
   }
 
   public setVacationDate() {
+    this.gameRestService.startLoading();
     console.log('Date id selected: ' + this.selectedDateId);
     let member: Member = {...this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id)};
     member.vacationStartDateId = this.selectedDateId;
     this.gameRestService.setVacationStartDate(member.id, member).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = this.selectedDateId;
+      this.gameRestService.closeLoading();
       this.router.navigate(['/main/play']);
     });
   }

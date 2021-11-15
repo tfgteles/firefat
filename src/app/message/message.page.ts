@@ -21,6 +21,7 @@ export class MessagePage implements OnInit {
   }
 
   public sendMessage(text: string): void {
+    this.gameRestService.startLoading();
     let gameMessage: GameMessage = {
       groupId: this.gameDataService.currentGame.id,
       playerId: this.gameDataService.currentUser.id,
@@ -31,6 +32,7 @@ export class MessagePage implements OnInit {
       console.log(resp);
       this.gameDataService.currentGame.gameMessages.push({...resp});
       this.gameMessages = [...this.gameDataService.getGameMessages()];
+      this.gameRestService.closeLoading();
     });
   }
 

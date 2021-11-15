@@ -36,10 +36,12 @@ export class ApplyGamePage implements OnInit {
   public async ngOnInit(): Promise<void> {
 
 
+    this.gameRestService.startLoading();
     this.gameRestService.getAllActiveGames().subscribe(resp => {
       this.gameDataService.activeGames = [...resp];
       this.games = [...resp];
       console.log(resp);
+      this.gameRestService.closeLoading();
     });
 
   }
@@ -59,6 +61,7 @@ export class ApplyGamePage implements OnInit {
 
   public applyToAGame(): void {
 
+    this.gameRestService.startLoading();
     let member: Member = {
       groupId: this.selectedGameId,
       playerId: this.gameDataService.currentUser.id,
@@ -70,6 +73,7 @@ export class ApplyGamePage implements OnInit {
     this.gameRestService.applyToAGame(member).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentUser.membership.push(this.games.find(g => g.id === this.selectedGameId));
+      this.gameRestService.closeLoading();
       this.router.navigate(['/main/home']);
     });
   }

@@ -31,6 +31,7 @@ export class PaymentPage implements OnInit {
   }
 
   public enterPayment() {
+    this.gameRestService.startLoading();
     const formData = new FormData();
     formData.append('payeeId', this.memberId.toString());
     formData.append('paymentDate', this.paymentFormGroup.get('paymentDate').value);
@@ -40,6 +41,7 @@ export class PaymentPage implements OnInit {
     this.gameRestService.sendPayment(formData).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).payments.push({...resp});
+      this.gameRestService.closeLoading();
     });
   }
 

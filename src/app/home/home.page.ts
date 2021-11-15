@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
 
+    this.gameRestService.startLoading();
     this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
       this.gameDataService.currentUser = {...resp};
       // this.userName = resp.userName? resp.userName : resp.userEmail;
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
           this.gameDataService.setSortedWeightDates();
           // this.currentGameMessage = `You are currently playing ${resp.gameName}. Click here to change the game.`;
           this.gameDataService.setCurrentGamePlayers();
+          this.gameRestService.closeLoading();
         });
       } else {
         // this.currentGameMessage = 'You do not have a game selected. Click here to select one.';

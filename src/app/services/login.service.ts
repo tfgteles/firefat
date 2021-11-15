@@ -7,25 +7,29 @@ import { BASE_URL, LOGIN_PATH, REGISTER_PATH } from './constants';
 import { AuthResult } from '../models/auth-dtos';
 import { Router } from '@angular/router';
 import { GameDataService } from './game-data.service';
+import { GameRestService } from './game-rest.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private router: Router, private gameData: GameDataService) {}
+  constructor(private http: HttpClient, private router: Router, private gameData: GameDataService, private gameRestService: GameRestService) {}
 
   public async loginUser(credentials: LoginCredential): Promise<AuthResult> {
+    this.gameRestService.startLoading();
     const url = BASE_URL + LOGIN_PATH;
     let authResult: AuthResult;
     localStorage.removeItem('id_token');
     try {
       authResult = await this.http.post<AuthResult>(url, credentials).toPromise();
+      this.gameRestService.closeLoading();
       console.log(authResult);
       localStorage.setItem('id_token', authResult.token);
       this.gameData.currentUserEmail = credentials.email;
       this.router.navigate(['/main']);
     } catch(err) {
+      this.gameRestService.closeLoading();
       console.log(err);
       authResult = {token: null, success: false, errors: ['Something went wrong. Please, try again.']};
     }
@@ -46,14 +50,17 @@ export class LoginService {
   }
 
   public async registerUser(userRegistration: UserRegistration): Promise<AuthResult> {
+    this.gameRestService.startLoading();
     const url = BASE_URL + REGISTER_PATH;
     let authResult: AuthResult;
     localStorage.removeItem('id_token');
     try {
       authResult = await this.http.post<AuthResult>(url, userRegistration).toPromise();
+      this.gameRestService.closeLoading();
       localStorage.setItem('id_token', authResult.token);
       this.router.navigate(['/main/home/user-profile']);
     } catch(err) {
+      this.gameRestService.closeLoading();
       console.log(err);
       authResult = {token: null, success: false, errors: ['Something went wrong. Please, try again.']};
     }

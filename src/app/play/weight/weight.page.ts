@@ -32,6 +32,7 @@ export class WeightPage implements OnInit {
   }
 
   public enterWeight() {
+    this.gameRestService.startLoading();
     const formData = new FormData();
     formData.append('groupMemberId', this.memberId.toString());
     formData.append('dateId', this.dateId.toString());
@@ -40,6 +41,7 @@ export class WeightPage implements OnInit {
     this.gameRestService.sendWeight(formData).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).weights.push({...resp});
+      this.gameRestService.closeLoading();
     });
 
   }

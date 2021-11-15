@@ -39,6 +39,7 @@ export class CurrentGamePage implements OnInit {
   } */
 
   public async updateCurrentGame(preferredGameId: number) {
+    this.gameRestService.startLoading();
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
@@ -51,6 +52,7 @@ export class CurrentGamePage implements OnInit {
         this.gameDataService.currentGame = {...resp};
         this.gameDataService.setSortedWeightDates();
         this.gameDataService.setCurrentGamePlayers();
+        this.gameRestService.closeLoading();
         this.router.navigate(['/main/home']);
       });
     });

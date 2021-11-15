@@ -40,6 +40,7 @@ export class UserProfilePage implements OnInit {
   ngOnInit() { }
 
   public updateProfile() {
+    this.gameRestService.startLoading();
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
@@ -51,6 +52,7 @@ export class UserProfilePage implements OnInit {
     this.gameRestService.updateUserProfile(userProfile.id, userProfile).subscribe(() => {
       this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
         this.gameDataService.currentUser = {...resp};
+        this.gameRestService.closeLoading();
         this.router.navigate(['/main/home']);
       });
     });
