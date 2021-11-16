@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create game</ion-title>
+    <ion-title>Create a new game</ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/main/home">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -11,85 +11,98 @@
 
 <ion-content>
   <form [formGroup]="gameFormGroup">
-    <ion-item>
-      <ion-label position="floating">Game name:</ion-label>
-      <ion-input formControlName="gameName" clearInput></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Description:</ion-label>
-      <ion-textarea rows="3" cols="50" placeholder="Enter any info here..." formControlName="gameDescription">
-      </ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Start date:</ion-label>
-      <ion-datetime 
-          formControlName="startDate" 
-          displayFormat="YYYY-MM-DD"
-          (ionChange)="setSchedule()"
-          clearInput>
-      </ion-datetime>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Weight frequency:</ion-label>
-      <ion-select placeholder="Select One" formControlName="weightFrequency" (ionChange)="setSchedule()">
-        <ion-select-option value="Weekly">Weekly</ion-select-option>
-        <ion-select-option value="BiWeekly">BiWeekly</ion-select-option>
-        <ion-select-option value="Monthly">Monthly</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Total number of weight days:</ion-label>
-      <ion-input
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label position="floating">Game name:</ion-label>
+          <ion-input formControlName="gameName" clearInput></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label position="floating">Description:</ion-label>
+          <ion-textarea rows="3" cols="50" placeholder="Enter any info here..." formControlName="gameDescription"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3">
+          <ion-datetime 
+            placeholder="Start date"
+            formControlName="startDate" 
+            displayFormat="YYYY-MM-DD"
+            (ionChange)="setSchedule()"
+            clearInput>
+          </ion-datetime>
+        </ion-col>
+        <ion-col size="4">
+          <ion-select placeholder="Weight frequency" formControlName="weightFrequency" (ionChange)="setSchedule()">
+            <ion-select-option value="Weekly">Weekly</ion-select-option>
+            <ion-select-option value="BiWeekly">BiWeekly</ion-select-option>
+            <ion-select-option value="Monthly">Monthly</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col size="5">
+          <ion-input
+            placeholder="Number of weights"
             type="number" 
             formControlName="noWeightDays" 
             (ionChange)="setSchedule()" 
             clearInput>
-      </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">End date: {{newGame?.endDate? newGame.endDate:'not defined'}}</ion-label>
-    </ion-item>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4" class="ion-padding-top">End date:</ion-col>
+        <ion-col size="4">{{newGame?.endDate? (newGame.endDate | date: 'mediumDate') :'not defined'}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="ion-padding-top">Minimum weight loss:</ion-col>
+        <ion-col size="4">
+          <ion-input placeholder="Min weight loss" formControlName="minWeightLoss" clearInput type="number"></ion-input>
+        </ion-col>
+        <ion-col size="4">
+          <ion-select placeholder="Weight unit" formControlName="weightUnit">
+            <ion-select-option value="kg">kg</ion-select-option>
+            <ion-select-option value="lb">lb</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="ion-padding-top">Game fee:</ion-col>
+        <ion-col size="4">
+          <ion-input placeholder="Game fee" formControlName="gameFee" clearInput type="number"></ion-input>
+        </ion-col>
+        <ion-col size="4">
+          <ion-select placeholder="Currency" formControlName="currency">
+            <ion-select-option value="BRL">BRL</ion-select-option>
+            <ion-select-option value="CAD">CAD</ion-select-option>
+            <ion-select-option value="EUR">EUR</ion-select-option>
+            <ion-select-option value="USD">USD</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3" class="ion-padding-top">Vacation length:</ion-col>
+        <ion-col size="3">
+          <ion-input placeholder="Vacation length" formControlName="vacationLength" clearInput type="number"></ion-input>
+        </ion-col>
+        <ion-col size="4" class="ion-padding-top">Is the last weight paid?:</ion-col>
+        <ion-col size="2" class="ion-padding-top">
+          <ion-checkbox formControlName="lastWeightPaid"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" class="ion-padding-top">Personal weight goal:</ion-col>
+        <ion-col size="6">
+          <ion-input type="number" formControlName="weightGoal"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
     <ion-item>
-      <ion-label position="floating">Minimum weight loss:</ion-label>
-      <ion-input formControlName="minWeightLoss" clearInput type="number"></ion-input>
+      <ion-button (click)="createGame()" [disabled]="gameFormGroup.invalid" size="default" slot="end">Create</ion-button>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Weight unit:</ion-label>
-      <!-- <ion-input formControlName="weightUnit" clearInput></ion-input> -->
-      <ion-select placeholder="Select One" formControlName="weightUnit">
-        <ion-select-option value="kg">kg</ion-select-option>
-        <ion-select-option value="lb">lb</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Game fee:</ion-label>
-      <ion-input formControlName="gameFee" clearInput type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Currency:</ion-label>
-      <!-- <ion-input formControlName="currency" clearInput></ion-input> -->
-      <ion-select placeholder="Select One" formControlName="currency">
-        <ion-select-option value="BRL">BRL</ion-select-option>
-        <ion-select-option value="CAD">CAD</ion-select-option>
-        <ion-select-option value="EUR">EUR</ion-select-option>
-        <ion-select-option value="USD">USD</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Vacation length:</ion-label>
-      <ion-input formControlName="vacationLength" clearInput type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Is the last weight paid?:</ion-label>
-      <ion-checkbox formControlName="lastWeightPaid"></ion-checkbox>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Weight goal:</ion-label>
-      <ion-input type="number" formControlName="weightGoal"></ion-input>
-    </ion-item>
-    <ion-button (click)="createGame()" [disabled]="gameFormGroup.invalid" margin-top expand="full">Create
-    </ion-button>
+    
   </form>
 </ion-content>

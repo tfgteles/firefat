@@ -13,30 +13,10 @@ import { AdminUserComponent } from './admin-user/admin-user.component';
 })
 export class HomePage implements OnInit {
 
-  // public userName: string;
-  // public currentGameMessage: string;
-
-  constructor(public modalController: ModalController, private gameRestService: GameRestService, private gameDataService: GameDataService) { }
+  constructor(public modalController: ModalController) { }
 
   public async ngOnInit(): Promise<void> {
 
-    this.gameRestService.startLoading();
-    this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
-      this.gameDataService.currentUser = {...resp};
-      // this.userName = resp.userName? resp.userName : resp.userEmail;
-      console.log(resp);
-      if (this.gameDataService.currentUser.preferredGameId > 0) {
-        this.gameRestService.getGameDetailsById(this.gameDataService.currentUser.preferredGameId).subscribe(resp => {
-          this.gameDataService.currentGame = {...resp};
-          this.gameDataService.setSortedWeightDates();
-          // this.currentGameMessage = `You are currently playing ${resp.gameName}. Click here to change the game.`;
-          this.gameDataService.setCurrentGamePlayers();
-          this.gameRestService.closeLoading();
-        });
-      } else {
-        // this.currentGameMessage = 'You do not have a game selected. Click here to select one.';
-      }
-    });
    
   }
 

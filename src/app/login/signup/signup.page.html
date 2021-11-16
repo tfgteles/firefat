@@ -12,17 +12,19 @@
 <ion-content>
   <form [formGroup]="signupFormGroup">
     <ion-item>
-      <ion-label>Email</ion-label>
+      <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Password</ion-label>
+      <ion-label position="floating">Password</ion-label>
       <ion-input formControlName="password1" type="password"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Re-enter Password</ion-label>
+      <ion-label position="floating">Re-enter Password</ion-label>
       <ion-input formControlName="password2" type="password"></ion-input>
     </ion-item>
-    <ion-button (click)="register()" [disabled]="signupFormGroup.invalid" margin-top expand="full">Create</ion-button>
+    <ion-item>
+      <ion-button (click)="register()" [disabled]="signupFormGroup.invalid" size="default" slot="end">Register</ion-button>
+    </ion-item>
   </form>
 </ion-content>

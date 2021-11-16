@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameDataService } from '../services/game-data.service';
 // import { ModalController } from '@ionic/angular';
 // import { ChargeComponent } from '../components/charge/charge.component';
 
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./play.page.scss'],
 })
 export class PlayPage implements OnInit {
-  constructor(/* public modalController: ModalController */) { }
+  public isGroupLeader: boolean;
+  constructor(private gameDataService: GameDataService/* public modalController: ModalController */) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isGroupLeader = this.gameDataService.currentGame.adminUserId === this.gameDataService.currentUser.id;
+  }
 
   /* async presentChargeModal() {
     const modal = await this.modalController.create({

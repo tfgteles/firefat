@@ -19,15 +19,15 @@
         <ion-icon name="home-outline"></ion-icon>
         <ion-label>Home</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="play">
+      <ion-tab-button tab="play" [disabled]="!hasCurrentGame">
         <ion-icon name="play-outline"></ion-icon>
         <ion-label>Play</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="info">
+      <ion-tab-button tab="info" [disabled]="!hasCurrentGame">
         <ion-icon name="information-circle-outline"></ion-icon>
         <ion-label>Info</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="message">
+      <ion-tab-button tab="message" [disabled]="!hasCurrentGame">
         <ion-icon name="people-outline"></ion-icon>
         <ion-label>Message</ion-label>
       </ion-tab-button>

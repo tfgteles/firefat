@@ -36,7 +36,7 @@
     </ion-card-content> -->
   </ion-card>
 
-  <ion-card [routerLink]="['/main/play', 'group-leader']">
+  <ion-card [routerLink]="['/main/play', 'group-leader']" *ngIf="isGroupLeader">
     <ion-card-header>
       <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Leader Duties</ion-card-title>

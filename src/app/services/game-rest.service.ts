@@ -163,7 +163,9 @@ export class GameRestService {
 
   public startLoading() {
     this.loadingController.create({
-      message: "Loading..."
+      message: 'Loading...',
+      backdropDismiss: true,
+      spinner: 'bubbles'
     }).then((response) => {
       response.present();
     });

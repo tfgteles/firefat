@@ -10,18 +10,18 @@
     <ion-card-content>
       <form [formGroup]="loginFormGroup">
         <ion-item>
-          <ion-label>Email</ion-label>
-          <ion-input formControlName="email" type="email"></ion-input>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email" placeholder=""></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Password</ion-label>
-          <ion-input formControlName="password" type="password"></ion-input>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password" placeholder=""></ion-input>
         </ion-item>
-        <ion-button (click)="login()" [disabled]="loginFormGroup.invalid" margin-top expand="full">Login</ion-button>
+        <ion-item>
+          <ion-button (click)="login()" [disabled]="loginFormGroup.invalid" slot="end" size="default">Login</ion-button>
+          <ion-button [routerLink]="['/login/signup']" slot="end" size="default">Sign up</ion-button>
+        </ion-item>
       </form>
-      <ion-text color="primary">
-        <p [routerLink]="['/login/signup']">Sign up</p>
-      </ion-text>
     </ion-card-content>
   </ion-card>
 </ion-content>
