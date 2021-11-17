@@ -12,16 +12,19 @@ import { GameRestService } from '../services/game-rest.service';
 export class MessagePage implements OnInit {
 
   public gameMessages: MessageDto[] = [];
+  public showSpinner: boolean;
 
   constructor(private gameDataService: GameDataService, private gameRestService: GameRestService) {
     this.gameMessages = [...this.gameDataService.getGameMessages()];
   }
 
   ngOnInit() {
+    this.showSpinner = false;
   }
 
+  /** Send messages */
   public sendMessage(text: string): void {
-    this.gameRestService.startLoading();
+    this.showSpinner = false;
     let gameMessage: GameMessage = {
       groupId: this.gameDataService.currentGame.id,
       playerId: this.gameDataService.currentUser.id,
@@ -29,10 +32,15 @@ export class MessagePage implements OnInit {
       messageText: text
     };
     this.gameRestService.sendMessage(gameMessage).subscribe(resp => {
-      console.log(resp);
       this.gameDataService.currentGame.gameMessages.push({...resp});
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = false;
       this.gameMessages = [...this.gameDataService.getGameMessages()];
-      this.gameRestService.closeLoading();
     });
   }
 

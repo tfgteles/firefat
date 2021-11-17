@@ -19,7 +19,8 @@
   </ion-list>
   <ion-item>
     <ion-textarea #newMessage rows="1" cols="50" placeholder="Message"></ion-textarea>
-    <ion-button (click)="sendMessage(newMessage.value)" [disabled]="newMessage.value === ''">
+    <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+    <ion-button (click)="sendMessage(newMessage.value)" [disabled]="newMessage.value === '' || showSpinner">
       <ion-icon slot="icon-only" fill="clear" name="caret-forward-outline"></ion-icon>
     </ion-button>
   </ion-item>
