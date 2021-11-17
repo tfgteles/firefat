@@ -1,59 +1,27 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Play</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
 
   <ion-card [routerLink]="['/main/play', 'weight']">
     <ion-card-header>
-      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Weight</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>
-      Your last weight was 87.5 kg
-    </ion-card-content> -->
   </ion-card>
 
   <ion-card [routerLink]="['/main/play', 'payment']">
     <ion-card-header>
-      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Payment</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>
-      $ 150.00 you have paid so far
-    </ion-card-content> -->
   </ion-card>
 
   <ion-card [routerLink]="['/main/play', 'vacation']">
     <ion-card-header>
-      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Vacation</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>
-      You have not taken your vacation yet!
-    </ion-card-content> -->
   </ion-card>
 
   <ion-card [routerLink]="['/main/play', 'group-leader']" *ngIf="isGroupLeader">
     <ion-card-header>
-      <!-- <ion-card-subtitle>You are playing:</ion-card-subtitle> -->
       <ion-card-title>Leader Duties</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>
-      You have not taken your vacation yet!
-    </ion-card-content> -->
   </ion-card>
-
-  <!-- <ion-card (click)="this.presentChargeModal()">
-    <ion-card-header>
-      <ion-card-subtitle>You are playing:</ion-card-subtitle>
-      <ion-card-title>Charges</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      $ 190.00 is your total fee so far
-    </ion-card-content>
-  </ion-card> -->
 
 </ion-content>

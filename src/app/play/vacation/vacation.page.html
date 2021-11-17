@@ -22,6 +22,11 @@
     <ion-label>Vacation start date: {{selectedDate | date: 'mediumDate'}}</ion-label>
     <ion-button (click)="clearSelection()" slot="end">CLEAR</ion-button>
   </ion-item>
-  <ion-button (click)="setVacationDate()" *ngIf="selectedDateId > 0" margin-top expand="full">SET VACATIOM
-  </ion-button>
+  <ion-item>
+    <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+    <ion-button (click)="setVacationDate()" [disabled]="selectedDateId <= 0 || showSpinner" size="default" slot="end">
+      SET VACATION
+    </ion-button>
+  </ion-item>
+
 </ion-content>

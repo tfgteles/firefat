@@ -9,6 +9,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor() { }
 
+  /** Interceptor method to add the JWT token to the requests' headers */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const idToken = localStorage.getItem('id_token');
 

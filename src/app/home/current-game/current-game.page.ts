@@ -14,16 +14,17 @@ import { GameRestService } from 'src/app/services/game-rest.service';
 export class CurrentGamePage implements OnInit {
 
   public games: Game[] = [];
+  public showSpinner: boolean;
 
   constructor(
     public modalController: ModalController, 
     private gameRestService: GameRestService, 
     private gameDataService: GameDataService,
-    private router: Router
-    ) { }
+    private router: Router) { }
 
   public ngOnInit() { 
     this.games = [...this.gameDataService.currentUser.membership.filter(g => g.id !== this.gameDataService.currentUser.preferredGameId)];
+    this.showSpinner = false;
   }
 
   /* public async selectGameModal(): Promise<void> {
@@ -38,8 +39,12 @@ export class CurrentGamePage implements OnInit {
     });
   } */
 
+  /**
+   * Set or update the user's current game, and load that game details
+   * @param preferredGameId {number} game id
+   */
   public async updateCurrentGame(preferredGameId: number) {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
@@ -47,12 +52,26 @@ export class CurrentGamePage implements OnInit {
     };
     this.gameRestService.updatePreferredGame(userProfile.id, userProfile).subscribe(() =>{
       this.gameDataService.currentUser.preferredGameId = preferredGameId;
+      
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = true;
       this.gameRestService.getGameDetailsById(preferredGameId).subscribe(resp => {
-        console.log(resp);
         this.gameDataService.currentGame = {...resp};
         this.gameDataService.setSortedWeightDates();
         this.gameDataService.setCurrentGamePlayers();
-        this.gameRestService.closeLoading();
+        this.showSpinner = false;
+      },
+      err => {
+        this.showSpinner = false;
+        this.gameRestService.showErrorToast(err);
+      },
+      () => {
+        this.gameRestService.showSuccessToast('Current game successfully set up.');
         this.router.navigate(['/main/home']);
       });
     });

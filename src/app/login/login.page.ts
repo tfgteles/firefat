@@ -12,27 +12,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginFormGroup: FormGroup;
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder, private router: Router, private gameRestService: GameRestService) { }
+  public loginFormGroup: FormGroup;
+  public showSpinner: boolean;
+
+  constructor(
+    private loginService: LoginService, 
+    private formBuilder: FormBuilder, 
+    private router: Router, 
+    private gameRestService: GameRestService) { }
 
   ngOnInit() {
     this.loginFormGroup = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+    this.showSpinner = false;
   }
 
+  /** Call the login service */
   public async login() {
-    await this.gameRestService.startLoading();
+    this.showSpinner = true;
     const loginCredentials: LoginCredential = this.loginFormGroup.value;
     let authResult: AuthResult;
-    
     authResult = await this.loginService.loginUser(loginCredentials);
-    this.gameRestService.closeLoading();
+    this.showSpinner = false;
     if (!authResult.success) {
-      console.log(authResult);
-      console.log(authResult.errors[0]);
       this.gameRestService.showErrorToast(authResult?.errors[0]);
     } else {
       this.router.navigate(['/main']);

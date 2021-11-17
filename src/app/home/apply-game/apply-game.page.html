@@ -13,18 +13,18 @@
 
   <ion-grid *ngIf="selectedGameId === 0">
     <ion-row>
-      <ion-col>Game Id</ion-col>
-      <ion-col>Name</ion-col>
-      <ion-col>Start Date</ion-col>
-      <ion-col>End Date</ion-col>
-      <ion-col>Weight Frequency</ion-col>
+      <ion-col size="1">Game Id</ion-col>
+      <ion-col size="3">Name</ion-col>
+      <ion-col size="3">Start Date</ion-col>
+      <ion-col size="3">End Date</ion-col>
+      <ion-col size="2">Weight Frequency</ion-col>
     </ion-row>
     <ion-row *ngFor="let game of games" (click)="selectGame(game)">
-      <ion-col>{{game.id}}</ion-col>
-      <ion-col>{{game.gameName}}</ion-col>
-      <ion-col>{{game.startDate | date: 'mediumDate'}}</ion-col>
-      <ion-col>{{game.endDate | date: 'mediumDate'}}</ion-col>
-      <ion-col>{{game.weightFrequency}}</ion-col>
+      <ion-col size="1">{{game.id}}</ion-col>
+      <ion-col size="3">{{game.gameName}}</ion-col>
+      <ion-col size="3">{{game.startDate | date: 'mediumDate'}}</ion-col>
+      <ion-col size="3">{{game.endDate | date: 'mediumDate'}}</ion-col>
+      <ion-col size="2">{{game.weightFrequency}}</ion-col>
     </ion-row>
   </ion-grid>
   
@@ -41,7 +41,8 @@
       <ion-label position="floating">Weight goal ({{selectedGameWeightUnit}}):</ion-label>
       <ion-input formControlName="weightGoal" clearInput type="number"></ion-input>
     </ion-item>
-    <ion-button (click)="applyToAGame()" [disabled]="memberFormGroup.invalid" margin-top expand="full">Apply
+    <ion-button (click)="applyToAGame()" [disabled]="memberFormGroup.invalid || showSpinner" margin-top expand="full">Apply
     </ion-button>
   </form>
+  <ion-spinner name="bubbles" class="overlay-spinner" *ngIf="showSpinner"></ion-spinner>
 </ion-content>

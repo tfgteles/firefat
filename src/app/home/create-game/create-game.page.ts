@@ -14,6 +14,7 @@ export class CreateGamePage implements OnInit {
 
   public gameFormGroup: FormGroup;
   public newGame: Game;
+  public showSpinner: boolean;
 
   constructor(private formBuilder: FormBuilder, 
     private gameRestService: GameRestService,
@@ -36,12 +37,12 @@ export class CreateGamePage implements OnInit {
       weightGoal: ['', Validators.required]
     });
     this.newGame = {weightDates: []};
+    this.showSpinner = false;
   }
 
+  /** Create a game call */
   public createGame() {
-    this.gameRestService.startLoading();
-    console.log('Create button clicked');
-    console.log(this.gameFormGroup.value);
+    this.showSpinner = true;
     const gameInput = {...this.gameFormGroup.value};
     this.newGame = {
       gameName: gameInput.gameName,
@@ -58,21 +59,20 @@ export class CreateGamePage implements OnInit {
       weightGoal: gameInput.weightGoal,
       weightDates: [...this.newGame.weightDates]
     };
-    console.log(this.newGame);
     this.gameRestService.createGame(this.newGame).subscribe(resp => {
-      console.log(resp);
       this.gameDataService.currentUser.membership.push({...resp});
-      this.gameRestService.closeLoading();
+      this.showSpinner = false;
+      this.gameRestService.showSuccessToast('Game created successfully');
       this.router.navigate(['/main/home']);
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
     });
   }
 
-  public confirmGameCreation() {
-    console.log('Confirm button clicked');
-  }
-
-  public setSchedule() {
-    console.log('setSchedule() called');
+  /** Helper method to set up the game schedule */
+  public setSchedule(): void {
     if (this.gameFormGroup.get('startDate').valid 
         && this.gameFormGroup.get('weightFrequency').valid
         && this.gameFormGroup.get('noWeightDays').valid) {
@@ -89,7 +89,8 @@ export class CreateGamePage implements OnInit {
         }
   }
 
-  public setWeeklySchedule() {
+  /** Helper method to set up the game schedule */
+  public setWeeklySchedule(): void {
     this.newGame.weightDates = [];
     let startDate = new Date(this.gameFormGroup.value.startDate);
     let noWeightDays = this.gameFormGroup.value.noWeightDays;
@@ -103,7 +104,8 @@ export class CreateGamePage implements OnInit {
     this.newGame.endDate = this.newGame.weightDates[this.newGame.weightDates.length - 1].scheduledDate;
   }
 
-  public setBiWeeklySchedule() {
+  /** Helper method to set up the game schedule */
+  public setBiWeeklySchedule(): void {
     this.newGame.weightDates = [];
     let startDate = new Date(this.gameFormGroup.value.startDate);
     let noWeightDays = this.gameFormGroup.value.noWeightDays;
@@ -117,7 +119,8 @@ export class CreateGamePage implements OnInit {
     this.newGame.endDate = this.newGame.weightDates[this.newGame.weightDates.length - 1].scheduledDate;
   }
 
-  public setMonthlySchedule() {
+  /** Helper method to set up the game schedule */
+  public setMonthlySchedule(): void {
     this.newGame.weightDates = [];
     let startDate = new Date(this.gameFormGroup.value.startDate);
     let noWeightDays = this.gameFormGroup.value.noWeightDays;

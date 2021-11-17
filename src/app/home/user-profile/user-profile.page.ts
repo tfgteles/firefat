@@ -13,6 +13,7 @@ import { GameRestService } from 'src/app/services/game-rest.service';
 export class UserProfilePage implements OnInit {
 
   public profileFormGroup: FormGroup;
+  public showSpinner: boolean;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -37,10 +38,12 @@ export class UserProfilePage implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.showSpinner = false;
+  }
 
   public updateProfile() {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
@@ -48,11 +51,23 @@ export class UserProfilePage implements OnInit {
       ...this.profileFormGroup.value
     };
     userProfile.userName = userProfile.userName? userProfile.userName : userProfile.firstName + ' ' + userProfile.lastName;
-    console.log(userProfile);
     this.gameRestService.updateUserProfile(userProfile.id, userProfile).subscribe(() => {
+      this.gameRestService.showSuccessToast('Profile successfully updated.');
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
       this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
         this.gameDataService.currentUser = {...resp};
-        this.gameRestService.closeLoading();
+        this.router.navigate(['/main/home']);
+      },
+      err => {
+        this.showSpinner = false;
+        this.gameRestService.showErrorToast(err);
+      },
+      () => {
         this.router.navigate(['/main/home']);
       });
     });

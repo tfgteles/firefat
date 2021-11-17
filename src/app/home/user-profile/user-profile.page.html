@@ -59,7 +59,11 @@
       <ion-label position="floating">Bio:</ion-label>
       <ion-textarea rows="3" cols="50" placeholder="Enter any notes here..." formControlName="userBio"></ion-textarea>
     </ion-item>
-    <ion-button (click)="updateProfile()" [disabled]="profileFormGroup.invalid" margin-top expand="full">UPDATE
-    </ion-button>
+    <ion-item>
+      <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+      <ion-button (click)="updateProfile()" [disabled]="profileFormGroup.invalid || showSpinner" size="default" slot="end">
+        UPDATE
+      </ion-button>
+    </ion-item>
   </form>
 </ion-content>

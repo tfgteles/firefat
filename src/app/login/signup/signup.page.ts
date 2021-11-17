@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthResult, UserRegistration } from 'src/app/models/auth-dtos';
+import { GameRestService } from 'src/app/services/game-rest.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -11,12 +13,13 @@ import { LoginService } from 'src/app/services/login.service';
 export class SignupPage implements OnInit {
 
   public signupFormGroup: FormGroup;
+  public showSpinner: boolean;
 
-  public showErrorMessage: boolean;
-
-  public errorMessage: string;
-
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder) { }
+  constructor(
+    private loginService: LoginService, 
+    private formBuilder: FormBuilder, 
+    private gameRestService: GameRestService,
+    private router: Router) { }
 
   ngOnInit() {
     this.signupFormGroup = this.formBuilder.group({
@@ -24,23 +27,23 @@ export class SignupPage implements OnInit {
       password1: ['', [Validators.required]],
       password2: ['', [Validators.required]]
     });
-    this.showErrorMessage = false;
-    this.errorMessage = '';
+    this.showSpinner = false;
   }
 
   public async register() {
+    this.showSpinner = true;
     const userRegistration: UserRegistration = {
       username: this.signupFormGroup.get('email').value,
       email: this.signupFormGroup.get('email').value,
       password: this.signupFormGroup.get('password1').value
     };
     let authResult: AuthResult;
-    console.log(userRegistration);
     authResult = await this.loginService.registerUser(userRegistration);
+    this.showSpinner = false;
     if (!authResult.success) {
-      this.errorMessage = authResult.errors[0];
-      this.showErrorMessage = true;
-      console.log(this.errorMessage);
+      this.gameRestService.showErrorToast(authResult?.errors[0]);
+    } else {
+      this.router.navigate(['/main/home/user-profile']);
     }
   }
 

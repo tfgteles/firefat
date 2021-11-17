@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Game } from '../models/game.model';
 import { UserProfile } from '../models/user-profile.model';
 import { 
@@ -27,7 +27,7 @@ import { Weight } from '../models/weight.model';
 import { Payment } from '../models/payment.model';
 import { PlayerDto } from '../models/game-dtos.model';
 import { GameMessage } from '../models/game-message.model';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 export class GameRestService {
 
 
-  constructor(private http: HttpClient, public loadingController: LoadingController, public toastController: ToastController) {}
+  constructor(private http: HttpClient, public toastController: ToastController) {}
   
   /** GET: get the logged in user profile */
   public getLoggedInUserProfile(): Observable<UserProfile> {
@@ -189,7 +189,7 @@ export class GameRestService {
   }
 
   /** Start the spinner */
-  public async startLoading() {
+  /* public async startLoading() {
     this.loadingController.create({
       message: 'Loading...',
       backdropDismiss: true,
@@ -197,16 +197,16 @@ export class GameRestService {
     }).then((response) => {
       response.present();
     });
-  }
+  } */
 
   /** Stop the spinner */
-  public async closeLoading() {
+  /* public async closeLoading() {
     this.loadingController.dismiss().then(resp => {
       console.log('Loader closed!', resp);
     }).catch(err => {
       console.log('Error ocurred: ', err);
     });
-  }
+  } */
 
   public async showSuccessToast(messageString: string) {
     const toast = await this.toastController.create({

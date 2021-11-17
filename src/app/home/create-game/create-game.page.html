@@ -101,7 +101,8 @@
     </ion-grid>
 
     <ion-item>
-      <ion-button (click)="createGame()" [disabled]="gameFormGroup.invalid" size="default" slot="end">Create</ion-button>
+      <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+      <ion-button (click)="createGame()" [disabled]="gameFormGroup.invalid || showSpinner" size="default" slot="end">Create</ion-button>
     </ion-item>
     
   </form>

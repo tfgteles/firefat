@@ -18,7 +18,8 @@
           <ion-input formControlName="password" type="password" placeholder=""></ion-input>
         </ion-item>
         <ion-item>
-          <ion-button (click)="login()" [disabled]="loginFormGroup.invalid" slot="end" size="default">Login</ion-button>
+          <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+          <ion-button (click)="login()" [disabled]="loginFormGroup.invalid || showSpinner" slot="end" size="default">Login</ion-button>
           <ion-button [routerLink]="['/login/signup']" slot="end" size="default">Sign up</ion-button>
         </ion-item>
       </form>

@@ -12,22 +12,20 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col>#</ion-col>
-      <ion-col>Name</ion-col>
-      <ion-col>Initial Weigh ({{weightUnit}})</ion-col>
-      <ion-col>Goal ({{weightUnit}})</ion-col>
-      <ion-col>Weight ({{weightUnit}})</ion-col>
-      <ion-col>Weight Loss ({{weightUnit}})</ion-col>
-      <ion-col>Weigh Loss (%)</ion-col>
+      <ion-col size="1">#</ion-col>
+      <ion-col size="3">Name</ion-col>
+      <ion-col size="2">Initial Weigh ({{weightUnit}})</ion-col>
+      <ion-col size="2">Goal ({{weightUnit}})</ion-col>
+      <ion-col size="2">Weight ({{weightUnit}})</ion-col>
+      <ion-col size="2">Weigh Loss (%)</ion-col>
     </ion-row>
     <ion-row *ngFor="let r of ranking">
-      <ion-col>{{r.order}}</ion-col>
-      <ion-col>{{r.player.userName}}</ion-col>
-      <ion-col>{{r.initialWeight | number: '1.1-1'}}</ion-col>
-      <ion-col>{{r.player.weightGoal | number: '1.1-1'}}</ion-col>
-      <ion-col>{{(r.weightMeasure === 0)? '' : r.weightMeasure | number: '1.1-1'}}</ion-col>
-      <ion-col>{{(r.weightMeasure === 0)? '' : r.weightLoss | number: '1.1-1'}}</ion-col>
-      <ion-col>{{(r.weightMeasure === 0)? '' : r.percentageLoss | number: '1.1-1'}}</ion-col>
+      <ion-col size="1">{{r.order}}</ion-col>
+      <ion-col size="3">{{r.player.userName}}</ion-col>
+      <ion-col size="2">{{r.initialWeight | number: '1.1-1'}}</ion-col>
+      <ion-col size="2">{{r.player.weightGoal | number: '1.1-1'}}</ion-col>
+      <ion-col size="2">{{(r.weightMeasure === 0)? '' : r.weightMeasure | number: '1.1-1'}}</ion-col>
+      <ion-col size="2">{{(r.weightMeasure === 0)? '' : r.percentageLoss | number: '1.1-1'}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

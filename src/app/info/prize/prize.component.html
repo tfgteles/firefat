@@ -18,16 +18,16 @@
   </ion-item>
   <ion-grid>
     <ion-row>
-      <ion-col>#</ion-col>
-      <ion-col>Name</ion-col>
-      <ion-col>Total Paid ({{currency}})</ion-col>
-      <ion-col>Total Debt ({{currency}})</ion-col>
+      <ion-col size="1">#</ion-col>
+      <ion-col size="5">Name</ion-col>
+      <ion-col size="3">Total Paid ({{currency}})</ion-col>
+      <ion-col size="3">Total Debt ({{currency}})</ion-col>
     </ion-row>
     <ion-row *ngFor="let d of playersDebt">
-      <ion-col>{{d.order}}</ion-col>
-      <ion-col>{{d.player.userName}}</ion-col>
-      <ion-col>{{d.totalPaid | number: '1.2-2'}}</ion-col>
-      <ion-col>{{d.totalDebt | number: '1.2-2'}}</ion-col>
+      <ion-col size="1">{{d.order}}</ion-col>
+      <ion-col size="5">{{d.player.userName}}</ion-col>
+      <ion-col size="3">{{d.totalPaid | number: '1.2-2'}}</ion-col>
+      <ion-col size="3">{{d.totalDebt | number: '1.2-2'}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

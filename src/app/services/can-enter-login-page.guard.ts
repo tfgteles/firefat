@@ -10,6 +10,7 @@ export class CanEnterLoginPageGuard implements CanActivate {
 
   constructor(private router: Router, private loginService: LoginService) { }
 
+  /** Auth guard helper method, if the user is logged in, they will be redirected to the main page */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

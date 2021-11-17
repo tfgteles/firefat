@@ -27,14 +27,19 @@
     <ion-item>
       <ion-label>Receipt picture: {{fileName || 'enter image or pdf file'}}</ion-label>
       <ion-button (click)="inputFile.click()">
-        <ion-icon lazy="true" slot="icon-only" fill="clear"></ion-icon>
+        <ion-icon name="attach-outline" slot="icon-only"></ion-icon>
+        <!-- <ion-icon lazy="true" slot="icon-only" fill="clear"></ion-icon> -->
       </ion-button>
         <input class="ion-hide" #inputFile type="file" (change)="loadImage($event)" id="file-input" accept="image/*, application/pdf">
     </ion-item>
 
-    <ion-button (click)="enterPayment()" [disabled]="paymentFormGroup.invalid" margin-top expand="full">
-      SEND PAYMENT
-    </ion-button>
+    <ion-item>
+      <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+      <ion-button (click)="enterPayment()" [disabled]="paymentFormGroup.invalid || showSpinner" size="default" slot="end">
+        SEND PAYMENT
+      </ion-button>
+    </ion-item>
+    
   </form>
 
   <ion-item *ngIf="memberId === 0" color="warning">

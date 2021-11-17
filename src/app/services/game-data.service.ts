@@ -198,7 +198,7 @@ export class GameDataService {
   /**
    * Set the array sortedWeightDates of the current game
    */
-  public setSortedWeightDates() {
+  public setSortedWeightDates(): void {
     this.sortedWeightDates = [];
     let weightDates: WeightDate[] = [...this.currentGame.weightDates];
     for (let d of weightDates) {

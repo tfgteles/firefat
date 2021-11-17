@@ -23,6 +23,7 @@ export class GroupLeaderPage implements OnInit {
   public weightUnit: string;
   public currency: string;
   public showCards: boolean[];
+  public showSpinner: boolean;
 
   constructor(private formBuilder: FormBuilder, private gameDataService: GameDataService, private gameRestService: GameRestService) { }
 
@@ -33,6 +34,7 @@ export class GroupLeaderPage implements OnInit {
     this.weightUnit = this.gameDataService.currentGame.weightUnit;
     this.currency = this.gameDataService.currentGame.currency;
     this.showCards = [false, false, false, false];
+    this.showSpinner = false;
     this.editWeightFormGroup = this.formBuilder.group({
       participant: ['', Validators.required],
       dateId: ['', Validators.required],
@@ -57,7 +59,7 @@ export class GroupLeaderPage implements OnInit {
 
   /** Update the member's application */
   public replyApplication(memberId: number, newMemberStatus: string) {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     let memberDto: Member = {...this.gameDataService.currentGame.members.find(m => m.id === memberId)};
     let backendMember: Member = {
       id: memberId,
@@ -72,20 +74,26 @@ export class GroupLeaderPage implements OnInit {
     };
     this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
       this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).memberStatus = newMemberStatus;
-      this.gameRestService.closeLoading();
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = false;
+      this.toggleShowCards(0);
+      this.gameRestService.showSuccessToast('Application updated successfully.');
     });
-    this.toggleShowCards(0);
   }
 
   /** Update or create a new member's weight */
   public editWeight() {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     const weight: Weight = {
       groupMemberId: this.editWeightFormGroup.value['participant'],
       dateId: this.editWeightFormGroup.value['dateId'],
       weightMeasure: this.editWeightFormGroup.value['weightMeasure']
     }
-    console.log(weight);
     const member: Member = this.gameDataService.currentGame.members.find(m => m.id === weight.groupMemberId);
     let weightId = 0;
     if (member) {
@@ -97,40 +105,62 @@ export class GroupLeaderPage implements OnInit {
       // call put
       this.gameRestService.editWeight(weightId, weight).subscribe(() => {
         this.gameDataService.currentGame.members.find(m => m.id === weight.groupMemberId).weights.find(w => w.id === weightId).weightMeasure = weight.weightMeasure;
-        this.gameRestService.closeLoading();
+      },
+      err => {
+        this.showSpinner = false;
+        this.gameRestService.showErrorToast(err);
+      },
+      () => {
+        this.showSpinner = false;
+        this.toggleShowCards(1);
+        this.gameRestService.showSuccessToast('Weight updated successfully.');
       });
     } else {
       // call post
       this.gameRestService.createWeight(weight).subscribe(resp => {
         this.gameDataService.currentGame.members.find(m => m.id === weight.groupMemberId).weights.push({...resp});
-        this.gameRestService.closeLoading();
+      },
+      err => {
+        this.showSpinner = false;
+        this.gameRestService.showErrorToast(err);
+      },
+      () => {
+        this.showSpinner = false;
+        this.toggleShowCards(1);
+        this.gameRestService.showSuccessToast('Weight updated successfully.');
       });
     }
-    this.toggleShowCards(1);
+    
   }
 
   /** Create a new member's payment */
   public sendPayment() {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     const payment: Payment = {
       payeeId: this.editPaymentFormGroup.value['payeeId'],
       paymentDate: this.editPaymentFormGroup.value['paymentDate'],
       amountPaid: this.editPaymentFormGroup.value['amountPaid']
     };
-    console.log(payment);
     this.gameRestService.createPayment(payment).subscribe(resp => {
       this.gameDataService.currentGame.members.find(m => m.id = payment.payeeId).payments.push({...resp});
-      this.gameRestService.closeLoading();
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = false;
+      this.toggleShowCards(2);
+      this.gameRestService.showSuccessToast('Payment updated successfully.');
     });
-    this.toggleShowCards(2);
+    
   }
 
   /** Set or update member's vacation start date */
   public setVacation() {
-    this.gameRestService.startLoading();
+    this.showSpinner = true;
     let memberDto: Member = {...this.gameDataService.currentGame.members.find(m => m.id === this.editVacationFormGroup.value['memberId'])};
     memberDto.vacationStartDateId = this.editVacationFormGroup.value['vacationStartDateId'];
-    console.log(memberDto);
     let backendMember: Member = {
       id: memberDto.id,
       groupId: memberDto.groupId,
@@ -144,9 +174,17 @@ export class GroupLeaderPage implements OnInit {
     };
     this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
       this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = backendMember.vacationStartDateId;
-      this.gameRestService.closeLoading();
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = false;
+      this.toggleShowCards(3);
+      this.gameRestService.showSuccessToast('Vacation updated successfully.');
     });
-    this.toggleShowCards(3);
+    
   }
 
 }

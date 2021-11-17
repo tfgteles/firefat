@@ -15,12 +15,13 @@ export class VacationPage implements OnInit {
   public weightDates: WeightDate[] = [];
   public selectedDateId: number = 0;
   public selectedDate: Date;
-  private member: Member;
+  public showSpinner: boolean;
 
   constructor(private gameDataService: GameDataService, private gameRestService: GameRestService, private router: Router) { }
 
   ngOnInit() {
     this.weightDates = [...this.gameDataService.currentGame.weightDates];
+    this.showSpinner = false;
   }
 
   public selectDate(weightDate: WeightDate) {
@@ -34,14 +35,19 @@ export class VacationPage implements OnInit {
   }
 
   public setVacationDate() {
-    this.gameRestService.startLoading();
-    console.log('Date id selected: ' + this.selectedDateId);
+    this.showSpinner = true;
     let member: Member = {...this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id)};
     member.vacationStartDateId = this.selectedDateId;
     this.gameRestService.setVacationStartDate(member.id, member).subscribe(resp => {
-      console.log(resp);
       this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = this.selectedDateId;
-      this.gameRestService.closeLoading();
+    },
+    err => {
+      this.showSpinner = false;
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      this.showSpinner = false;
+      this.gameRestService.showSuccessToast('Vacation setup successfully.');
       this.router.navigate(['/main/play']);
     });
   }

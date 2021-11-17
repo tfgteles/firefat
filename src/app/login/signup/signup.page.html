@@ -24,7 +24,10 @@
       <ion-input formControlName="password2" type="password"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-button (click)="register()" [disabled]="signupFormGroup.invalid" size="default" slot="end">Register</ion-button>
+      <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+      <ion-button (click)="register()" [disabled]="signupFormGroup.invalid || showSpinner" size="default" slot="end">
+        Register
+      </ion-button>
     </ion-item>
   </form>
 </ion-content>
