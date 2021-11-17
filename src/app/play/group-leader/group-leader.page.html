@@ -10,23 +10,24 @@
 </ion-header>
 
 <ion-content>
+  <!-- Validate applications -->
   <ion-card>
     <ion-card-header (click)="toggleShowCards(0)">
       <ion-card-title >Validate applications</ion-card-title>
     </ion-card-header>
     <ion-card-content *ngIf="showCards[0]">
       <ion-item *ngFor="let applicant of applicants">
-        <ion-button size="small" slot="start" color="success" (click)="acceptMember(applicant.id)">
+        <ion-button size="small" slot="start" color="success" (click)="replyApplication(applicant.id, 'Player')">
           <ion-icon name="happy-outline" slot="icon-only">
         </ion-icon></ion-button>
         <ion-label>{{applicant.firstName}} {{applicant.lastName}} - {{applicant.userEmail}}</ion-label>
-        <ion-button size="small" slot="end" color="danger" (click)="denyMember(applicant.id)">
+        <ion-button size="small" slot="end" color="danger" (click)="replyApplication(applicant.id, 'Denied')">
           <ion-icon name="skull-outline" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-card-content>
   </ion-card>
-
+  <!-- Weights -->
   <ion-card>
     <ion-card-header (click)="toggleShowCards(1)">
       <ion-card-title>Edit weights</ion-card-title>
@@ -42,13 +43,13 @@
             </ion-col>
             <ion-col size="4">
               <ion-select placeholder="Date" formControlName="dateId" >
-                <ion-select-option *ngFor="let gameDate of gameDates" [value]="gameDate.weightDateId">{{gameDate.weightDateDate}}</ion-select-option>
+                <ion-select-option *ngFor="let gameDate of gameDates" [value]="gameDate.weightDateId">{{gameDate.weightDateDate | date: 'mediumDate'}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3">
               <ion-input type="number" formControlName="weightMeasure" placeholder="Weight"></ion-input>
             </ion-col>
-            <ion-col size="1">{{weightUnit}}</ion-col>
+            <ion-col size="1" class="ion-padding-top">{{weightUnit}}</ion-col>
           </ion-row>
         </ion-grid>
         <ion-item>
@@ -57,7 +58,7 @@
     </form>
     </ion-card-content>
   </ion-card>
-
+  <!-- Payments -->
   <ion-card>
     <ion-card-header (click)="toggleShowCards(2)">
       <ion-card-title>Edit payments</ion-card-title>
@@ -73,48 +74,48 @@
             </ion-col>
             <ion-col size="4">
               <ion-datetime 
-                placeholder="Payment date"
+                placeholder="Date"
                 formControlName="paymentDate" 
                 displayFormat="YYYY-MM-DD"
                 clearInput>
               </ion-datetime>
             </ion-col>
             <ion-col size="3">
-              <ion-input type="number" formControlName="amountPaid" placeholder="Payment"></ion-input>
+              <ion-input type="number" formControlName="amountPaid" placeholder="Amount paid"></ion-input>
             </ion-col>
-            <ion-col size="1">{{currency}}</ion-col>
+            <ion-col size="1" class="ion-padding-top">{{currency}}</ion-col>
           </ion-row>
         </ion-grid>
         <ion-item>
-          <ion-button (click)="editPayment()" [disabled]="editPaymentFormGroup.invalid" size="default" slot="end">OK</ion-button>
+          <ion-button (click)="sendPayment()" [disabled]="editPaymentFormGroup.invalid" size="default" slot="end">OK</ion-button>
         </ion-item>
     </form>
     </ion-card-content>
   </ion-card>
-
+  <!-- Vacations -->
   <ion-card>
     <ion-card-header (click)="toggleShowCards(3)">
-      <ion-card-title>Edit vacations</ion-card-title>
+      <ion-card-title>Vacations</ion-card-title>
     </ion-card-header>
     <ion-card-content *ngIf="showCards[3]">
       <form [formGroup]="editVacationFormGroup">
         <ion-grid>
           <ion-row>
-            <ion-col size="4">
+            <ion-col size="6">
               <ion-select placeholder="Member" formControlName="memberId">
                 <ion-select-option *ngFor="let member of members" [value]="member.id">{{member.firstName}} {{member.lastName}}</ion-select-option>
               </ion-select>
             </ion-col>
-            <ion-col size="4">
-              <ion-select placeholder="Date" formControlName="vacationStartDateId" >
-                <ion-select-option *ngFor="let gameDate of gameDates" [value]="gameDate.weightDateId">{{gameDate.weightDateDate}}</ion-select-option>
+            <ion-col size="6">
+              <ion-select formControlName="vacationStartDateId" placeholder="Date">
+                <ion-select-option *ngFor="let gameDate of gameDates" [value]="gameDate.weightDateId">{{gameDate.weightDateDate | date: 'mediumDate'}}</ion-select-option>
               </ion-select>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button (click)="editVacation()" [disabled]="editVacationFormGroup.invalid" size="default" slot="end">OK</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
+        <ion-item>
+          <ion-button (click)="setVacation()" [disabled]="editVacationFormGroup.invalid" size="default" slot="end">OK</ion-button>
+        </ion-item>
     </form>
     </ion-card-content>
   </ion-card>

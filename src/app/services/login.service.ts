@@ -17,21 +17,18 @@ export class LoginService {
   constructor(private http: HttpClient, private router: Router, private gameData: GameDataService, private gameRestService: GameRestService) {}
 
   public async loginUser(credentials: LoginCredential): Promise<AuthResult> {
-    this.gameRestService.startLoading();
     const url = BASE_URL + LOGIN_PATH;
     let authResult: AuthResult;
     localStorage.removeItem('id_token');
     try {
       authResult = await this.http.post<AuthResult>(url, credentials).toPromise();
-      this.gameRestService.closeLoading();
       console.log(authResult);
       localStorage.setItem('id_token', authResult.token);
       this.gameData.currentUserEmail = credentials.email;
-      this.router.navigate(['/main']);
     } catch(err) {
-      this.gameRestService.closeLoading();
-      console.log(err);
-      authResult = {token: null, success: false, errors: ['Something went wrong. Please, try again.']};
+      console.log(err.error);
+      console.log(err.error.errors[0]);
+      authResult = {...err.error};
     }
     return authResult;
   }

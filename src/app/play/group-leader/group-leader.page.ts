@@ -49,20 +49,37 @@ export class GroupLeaderPage implements OnInit {
     });
   }
 
+  /** Expand and condense the cards */
   public toggleShowCards(cardIndex: number) {
     console.log('Toggled:', cardIndex);
     this.showCards[cardIndex] = !this.showCards[cardIndex];
   }
 
-  public acceptMember(memberId: number) {
-    console.log(memberId);
+  /** Update the member's application */
+  public replyApplication(memberId: number, newMemberStatus: string) {
+    this.gameRestService.startLoading();
+    let memberDto: Member = {...this.gameDataService.currentGame.members.find(m => m.id === memberId)};
+    let backendMember: Member = {
+      id: memberId,
+      groupId: memberDto.groupId,
+      weightGoal: memberDto.weightGoal,
+      playerId: memberDto.playerId,
+      applicationDate: memberDto.applicationDate,
+      responseDate: memberDto.responseDate,
+      vacationStartDateId: memberDto.vacationStartDateId,
+      memberStatus: newMemberStatus,
+      goalAchieved: memberDto.goalAchieved
+    };
+    this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
+      this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).memberStatus = newMemberStatus;
+      this.gameRestService.closeLoading();
+    });
+    this.toggleShowCards(0);
   }
 
-  public denyMember(memberId: number) {
-    console.log(memberId);
-  }
-
+  /** Update or create a new member's weight */
   public editWeight() {
+    this.gameRestService.startLoading();
     const weight: Weight = {
       groupMemberId: this.editWeightFormGroup.value['participant'],
       dateId: this.editWeightFormGroup.value['dateId'],
@@ -75,32 +92,61 @@ export class GroupLeaderPage implements OnInit {
       weightId = member.weights.find(w => w.dateId === weight.dateId)?.id;
     }
     if (weightId > 0) {
+      weight.id = weightId;
+      weight.scaleImage = member.weights.find(w => w.id === weightId).scaleImage;
       // call put
+      this.gameRestService.editWeight(weightId, weight).subscribe(() => {
+        this.gameDataService.currentGame.members.find(m => m.id === weight.groupMemberId).weights.find(w => w.id === weightId).weightMeasure = weight.weightMeasure;
+        this.gameRestService.closeLoading();
+      });
     } else {
       // call post
+      this.gameRestService.createWeight(weight).subscribe(resp => {
+        this.gameDataService.currentGame.members.find(m => m.id === weight.groupMemberId).weights.push({...resp});
+        this.gameRestService.closeLoading();
+      });
     }
+    this.toggleShowCards(1);
   }
 
-  public editPayment() {
+  /** Create a new member's payment */
+  public sendPayment() {
+    this.gameRestService.startLoading();
     const payment: Payment = {
       payeeId: this.editPaymentFormGroup.value['payeeId'],
       paymentDate: this.editPaymentFormGroup.value['paymentDate'],
       amountPaid: this.editPaymentFormGroup.value['amountPaid']
     };
     console.log(payment);
-    // call post
+    this.gameRestService.createPayment(payment).subscribe(resp => {
+      this.gameDataService.currentGame.members.find(m => m.id = payment.payeeId).payments.push({...resp});
+      this.gameRestService.closeLoading();
+    });
+    this.toggleShowCards(2);
   }
 
-  public editVacation() {
-    // this.gameRestService.startLoading();
-    let member: Member = {...this.gameDataService.currentGame.members.find(m => m.id === this.editVacationFormGroup.value['memberId'])};
-    member.vacationStartDateId = this.editVacationFormGroup.value['vacationStartDateId'];
-    console.log(member);
-    /* this.gameRestService.setVacationStartDate(member.id, member).subscribe(resp => {
-      console.log(resp);
-      this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = this.selectedDateId;
+  /** Set or update member's vacation start date */
+  public setVacation() {
+    this.gameRestService.startLoading();
+    let memberDto: Member = {...this.gameDataService.currentGame.members.find(m => m.id === this.editVacationFormGroup.value['memberId'])};
+    memberDto.vacationStartDateId = this.editVacationFormGroup.value['vacationStartDateId'];
+    console.log(memberDto);
+    let backendMember: Member = {
+      id: memberDto.id,
+      groupId: memberDto.groupId,
+      weightGoal: memberDto.weightGoal,
+      playerId: memberDto.playerId,
+      applicationDate: memberDto.applicationDate,
+      responseDate: memberDto.responseDate,
+      vacationStartDateId: this.editVacationFormGroup.value['vacationStartDateId'],
+      memberStatus: memberDto.memberStatus,
+      goalAchieved: memberDto.goalAchieved
+    };
+    this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
+      this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = backendMember.vacationStartDateId;
       this.gameRestService.closeLoading();
-    }); */
+    });
+    this.toggleShowCards(3);
   }
 
 }

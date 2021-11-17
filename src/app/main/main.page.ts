@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { GameDataService } from '../services/game-data.service';
 import { GameRestService } from '../services/game-rest.service';
 import { LoginService } from '../services/login.service';
@@ -12,12 +13,17 @@ export class MainPage implements OnInit {
 
   public hasCurrentGame: boolean;
 
-  constructor(private loginService: LoginService, private gameDataService: GameDataService, private gameRestService: GameRestService) { }
+  constructor(
+    private loginService: LoginService, 
+    private gameDataService: GameDataService, 
+    private gameRestService: GameRestService,
+    public loadingController: LoadingController
+    ) { }
 
   public async ngOnInit(): Promise<void> {
     this.hasCurrentGame = false;
 
-    this.gameRestService.startLoading();
+    // this.gameRestService.startLoading();
     this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
       this.gameDataService.currentUser = {...resp};
       console.log(resp);
@@ -27,10 +33,10 @@ export class MainPage implements OnInit {
           this.hasCurrentGame = true;
           this.gameDataService.setSortedWeightDates();
           this.gameDataService.setCurrentGamePlayers();
-          this.gameRestService.closeLoading();
+          // this.gameRestService.closeLoading();
         });
       } else {
-        this.gameRestService.closeLoading();
+        // this.gameRestService.closeLoading();
       }
     });
   }

@@ -36,12 +36,19 @@ export class ApplyGamePage implements OnInit {
   public async ngOnInit(): Promise<void> {
 
 
-    this.gameRestService.startLoading();
+    await this.gameRestService.startLoading();
     this.gameRestService.getAllActiveGames().subscribe(resp => {
       this.gameDataService.activeGames = [...resp];
       this.games = [...resp];
       console.log(resp);
       this.gameRestService.closeLoading();
+    },
+    err => {
+      this.gameRestService.closeLoading();
+      this.gameRestService.showErrorToast(err);
+    },
+    () => {
+      console.log('Completed the Rest call');
     });
 
   }
@@ -59,9 +66,9 @@ export class ApplyGamePage implements OnInit {
   } */
 
 
-  public applyToAGame(): void {
+  public async applyToAGame(): Promise<void> {
 
-    this.gameRestService.startLoading();
+    await this.gameRestService.startLoading();
     let member: Member = {
       groupId: this.selectedGameId,
       playerId: this.gameDataService.currentUser.id,
@@ -73,7 +80,15 @@ export class ApplyGamePage implements OnInit {
     this.gameRestService.applyToAGame(member).subscribe(resp => {
       console.log(resp);
       this.gameDataService.currentUser.membership.push(this.games.find(g => g.id === this.selectedGameId));
+      // this.gameRestService.closeLoading();
+    },
+    err => {
+      console.log(err);
+    },
+    () => {
       this.gameRestService.closeLoading();
+      this.gameRestService.showSuccessToast('The application is done');
+      console.log('Completed the rest call');
       this.router.navigate(['/main/home']);
     });
   }
