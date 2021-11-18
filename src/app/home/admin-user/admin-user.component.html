@@ -9,4 +9,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-card>
+    <ion-card-header (click)="toggleShowGamesCard()">
+      <ion-card-title >Games Stats</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="showGamesCard"></ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header (click)="toggleShowMembersCard()">
+      <ion-card-title >Members Stats</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="showMembersCard"></ion-card-content>
+  </ion-card>
+
+  <ion-spinner name="bubbles" class="overlay-spinner" *ngIf="showSpinner"></ion-spinner>
+</ion-content>

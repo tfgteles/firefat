@@ -49,5 +49,8 @@ export const PAYMENT_BASE_PATH: string = 'payments';
 
 export const PAYMENT_PLAYER_PATH: string = 'payments/player';
 
+// Weight Date
+export const WEIGHT_DATE_BASE_PATH: string = 'weightdates';
+
 // Game Message
 export const GAME_MESSAGE_BASE_PATH: string = 'gamemessages';
