@@ -13,7 +13,6 @@ import { Weight } from '../models/weight.model';
 })
 export class GameDataService {
 
-  public currentUserEmail = '';
   public currentUser: UserProfile;
   public currentGame: Game;
   public sortedWeightDates: GameDate[] = [];
@@ -120,7 +119,6 @@ export class GameDataService {
       if (dateNow.valueOf() - d.weightDateDate.valueOf() < 0) {break;}
       let weight: Weight = weights.find(w => w.dateId === d.weightDateId);
       let weightMeasure = weight? weight.weightMeasure : 0;
-      console.log(weightMeasure);
       progress.push({
         id: d.order,
         memberId: memberId,
@@ -129,7 +127,6 @@ export class GameDataService {
         weightMeasure: weightMeasure,
       });
     }
-    console.log(progress);
     initialWeight = progress[0].weightMeasure;
     minWeight = initialWeight;
     progress[0].description = 'Initial weight';
@@ -174,7 +171,6 @@ export class GameDataService {
         progress[progress.length - 1].charge = 0;
       }
     }
-    console.log(progress);
     return progress;
   }
 
@@ -191,7 +187,6 @@ export class GameDataService {
     for (let i = weightDateVacationIndex; i < weightDateVacationIndex + vacationLength; i++) {
       datesId.push(this.sortedWeightDates[i].weightDateId);
     }
-    console.log(datesId);
     return datesId;
   }
 

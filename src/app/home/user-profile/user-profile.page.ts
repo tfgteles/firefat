@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthResult } from 'src/app/models/auth-dtos';
 import { UserProfile } from 'src/app/models/user-profile.model';
 import { GameDataService } from 'src/app/services/game-data.service';
 import { GameRestService } from 'src/app/services/game-rest.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +21,8 @@ export class UserProfilePage implements OnInit {
     private formBuilder: FormBuilder, 
     private gameDataService: GameDataService, 
     private gameRestService: GameRestService,
-    private router: Router) {
+    private router: Router,
+    private loginService: LoginService) {
     this.profileFormGroup = this.formBuilder.group({
       firstName: [this.gameDataService.currentUser.firstName, Validators.required],
       lastName: [this.gameDataService.currentUser.lastName, Validators.required],
@@ -42,6 +45,7 @@ export class UserProfilePage implements OnInit {
     this.showSpinner = false;
   }
 
+  /** Update user profile */
   public updateProfile() {
     this.showSpinner = true;
     let userProfile: UserProfile = {
@@ -72,5 +76,19 @@ export class UserProfilePage implements OnInit {
       });
     });
   }
+
+  /** Delete the user profile and account */
+  public async deleteProfile() {
+    this.showSpinner = true;
+    let authResult: AuthResult;
+    authResult = await this.loginService.deleteUser(this.gameDataService.currentUser.id);
+    this.showSpinner = false;
+    if (!authResult.success) {
+      this.gameRestService.showErrorToast(authResult?.errors[0]);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
 
 }

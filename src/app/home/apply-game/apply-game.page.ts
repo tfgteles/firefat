@@ -41,30 +41,17 @@ export class ApplyGamePage implements OnInit {
     this.gameRestService.getAllActiveGames().subscribe(resp => {
       this.gameDataService.activeGames = [...resp];
       this.games = [...resp];
-      this.showSpinner = false;
+      
     },
     err => {
       this.showSpinner = false;
       this.gameRestService.showErrorToast(err);
     },
     () => {
-      console.log('Completed the Rest call');
+      this.showSpinner = false;
     });
 
   }
-
-  /* public async selectGameModal(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: SelectGameComponent,
-      componentProps: { games: this.games },
-      cssClass: 'standard-modal'
-    });
-    await modal.present();
-    modal.onDidDismiss().then(data => {
-      console.log(data.data);
-    });
-  } */
-
 
   /** Apply to a game call */
   public async applyToAGame(): Promise<void> {
@@ -76,8 +63,6 @@ export class ApplyGamePage implements OnInit {
       weightGoal: this.memberFormGroup.value.weightGoal
     };
     
-    console.log(member);
-
     this.gameRestService.applyToAGame(member).subscribe(resp => {
       this.gameDataService.currentUser.membership.push(this.games.find(g => g.id === this.selectedGameId));
       this.showSpinner = false;

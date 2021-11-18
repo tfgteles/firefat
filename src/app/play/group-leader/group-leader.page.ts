@@ -53,7 +53,6 @@ export class GroupLeaderPage implements OnInit {
 
   /** Expand and condense the cards */
   public toggleShowCards(cardIndex: number) {
-    console.log('Toggled:', cardIndex);
     this.showCards[cardIndex] = !this.showCards[cardIndex];
   }
 
@@ -74,6 +73,7 @@ export class GroupLeaderPage implements OnInit {
     };
     this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
       this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).memberStatus = newMemberStatus;
+      this.applicants = [...this.gameDataService.currentGame.members.filter(m => m.memberStatus === 'Applied')];
     },
     err => {
       this.showSpinner = false;

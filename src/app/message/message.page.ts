@@ -15,7 +15,7 @@ export class MessagePage implements OnInit {
   public showSpinner: boolean;
 
   constructor(private gameDataService: GameDataService, private gameRestService: GameRestService) {
-    this.gameMessages = [...this.gameDataService.getGameMessages()];
+    this.gameMessages = [...this.gameDataService.getGameMessages()].reverse();
   }
 
   ngOnInit() {

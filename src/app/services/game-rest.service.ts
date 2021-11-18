@@ -174,8 +174,6 @@ export class GameRestService {
 
   /** Callback function in case of error response */
   private handleError(error: HttpErrorResponse) {
-    console.log(error);
-    console.log(error.status);
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -188,26 +186,7 @@ export class GameRestService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  /** Start the spinner */
-  /* public async startLoading() {
-    this.loadingController.create({
-      message: 'Loading...',
-      backdropDismiss: true,
-      spinner: 'bubbles'
-    }).then((response) => {
-      response.present();
-    });
-  } */
-
-  /** Stop the spinner */
-  /* public async closeLoading() {
-    this.loadingController.dismiss().then(resp => {
-      console.log('Loader closed!', resp);
-    }).catch(err => {
-      console.log('Error ocurred: ', err);
-    });
-  } */
-
+  /** Show success toast */
   public async showSuccessToast(messageString: string) {
     const toast = await this.toastController.create({
       header: 'Success',
@@ -220,13 +199,14 @@ export class GameRestService {
           text: 'Close',
           side: 'end',
           role: 'cancel',
-          handler: () => {console.log('Cancel clicked!');}
+          // handler: () => {console.log('Cancel clicked!');}
         }
       ]
     });
     await toast.present();
   }
 
+  /** Show error message in a toast */
   public async showErrorToast(messageString: string) {
     const toast = await this.toastController.create({
       header: 'Error',
@@ -239,7 +219,7 @@ export class GameRestService {
           text: 'Close',
           side: 'end',
           role: 'cancel',
-          handler: () => {console.log('Cancel clicked!');}
+          // handler: () => {console.log('Cancel clicked!');}
         }
       ]
     });

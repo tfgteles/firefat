@@ -60,10 +60,19 @@
       <ion-textarea rows="3" cols="50" placeholder="Enter any notes here..." formControlName="userBio"></ion-textarea>
     </ion-item>
     <ion-item>
+      <ion-label class="ion-text-wrap">
+        If you would like to delete your profile, scroll down and click the delete botton.
+      </ion-label>
       <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
       <ion-button (click)="updateProfile()" [disabled]="profileFormGroup.invalid || showSpinner" size="default" slot="end">
         UPDATE
       </ion-button>
     </ion-item>
   </form>
+  <ion-item>
+    <ion-button (click)="deleteProfile()" [disabled]="showSpinner" size="small" slot="end" color="danger" >
+      <ion-icon name="skull-outline" slot="start"></ion-icon>
+      DELETE
+    </ion-button>
+  </ion-item>
 </ion-content>

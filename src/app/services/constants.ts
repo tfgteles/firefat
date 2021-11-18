@@ -7,6 +7,8 @@ export const LOGIN_PATH: string = 'authmanagement/login';
 
 export const REGISTER_PATH: string = 'authmanagement/register';
 
+export const DELETE_PATH: string = 'authmanagement/';
+
 // User Profile
 export const USER_PROFILE_BASE_PATH: string = 'userprofiles';
 

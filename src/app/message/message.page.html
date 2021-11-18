@@ -1,16 +1,7 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>message</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
   <ion-list>
     <ion-list-header>Messages</ion-list-header>
     <ion-item *ngFor="let message of gameMessages">
-      <!-- <ion-avatar slot="start">
-        <img src="">
-      </ion-avatar> -->
       <ion-label>
         <h4>{{message.player.userName}} - {{message.messageDate | date: 'mediumDate'}}</h4>
         <p>{{message.text}}</p>

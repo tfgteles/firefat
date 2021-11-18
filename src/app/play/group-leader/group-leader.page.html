@@ -25,6 +25,9 @@
           <ion-icon name="skull-outline" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item>
+      <ion-item>
+        <ion-label *ngIf="applicants.length === 0">No pending application</ion-label>
+      </ion-item>
     </ion-card-content>
   </ion-card>
   <!-- Weights -->
