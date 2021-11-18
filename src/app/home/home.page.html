@@ -2,15 +2,12 @@
 
   <ion-card routerLink="./current-game">
     <ion-card-header>
-      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Current Game</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>{{currentGameMessage}}</ion-card-content> -->
   </ion-card>
 
   <ion-card routerLink="./apply-game">
     <ion-card-header>
-      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Apply to a Game</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -19,7 +16,6 @@
 
   <ion-card [routerLink]="['/main/home', 'create-game']">
     <ion-card-header>
-      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Create a New Game</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -28,17 +24,12 @@
 
   <ion-card routerLink="./user-profile">
     <ion-card-header>
-      <!-- <ion-card-subtitle>{{userName}}</ion-card-subtitle> -->
       <ion-card-title>Profile</ion-card-title>
     </ion-card-header>
-    <!-- <ion-card-content>
-      Edit your profile here!
-    </ion-card-content> -->
   </ion-card>
 
-  <ion-card (click)="presentAdminUserModal()">
+  <ion-card (click)="presentAdminUserModal()" *ngIf="isAppAdmin">
     <ion-card-header>
-      <!-- <ion-card-subtitle>Current game:</ion-card-subtitle> -->
       <ion-card-title>Admin</ion-card-title>
     </ion-card-header>
     <ion-card-content>

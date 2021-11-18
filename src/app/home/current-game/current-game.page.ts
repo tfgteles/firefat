@@ -14,6 +14,9 @@ import { GameRestService } from 'src/app/services/game-rest.service';
 export class CurrentGamePage implements OnInit {
 
   public games: Game[] = [];
+  public selectedGame: Game;
+  public isGameSelected: boolean;
+  public selectedMemberStatus; string;
   public showSpinner: boolean;
 
   constructor(
@@ -27,31 +30,18 @@ export class CurrentGamePage implements OnInit {
     this.showSpinner = false;
   }
 
-  /* public async selectGameModal(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: SelectGameComponent,
-      componentProps: { games: this.games },
-      cssClass: 'standard-modal'
-    });
-    await modal.present();
-    modal.onDidDismiss().then(data => {
-      console.log(data.data);
-    });
-  } */
-
   /**
    * Set or update the user's current game, and load that game details
-   * @param preferredGameId {number} game id
    */
-  public async updateCurrentGame(preferredGameId: number) {
+  public async updateCurrentGame() {
     this.showSpinner = true;
     let userProfile: UserProfile = {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
-      preferredGameId: preferredGameId
+      preferredGameId: this.selectedGame.id
     };
     this.gameRestService.updatePreferredGame(userProfile.id, userProfile).subscribe(() =>{
-      this.gameDataService.currentUser.preferredGameId = preferredGameId;
+      this.gameDataService.currentUser.preferredGameId = userProfile.preferredGameId;
       
     },
     err => {
@@ -60,7 +50,7 @@ export class CurrentGamePage implements OnInit {
     },
     () => {
       this.showSpinner = true;
-      this.gameRestService.getGameDetailsById(preferredGameId).subscribe(resp => {
+      this.gameRestService.getGameDetailsById(userProfile.preferredGameId).subscribe(resp => {
         this.gameDataService.currentGame = {...resp};
         this.gameDataService.setSortedWeightDates();
         this.gameDataService.setCurrentGamePlayers();
@@ -75,6 +65,40 @@ export class CurrentGamePage implements OnInit {
         this.router.navigate(['/main/home']);
       });
     });
+  }
+
+  /** Select a game from the list to be the current game */
+  public selectGame(game: Game) {
+    this.showSpinner = true;
+    this.gameRestService.getGameMembers(game.id).subscribe(
+      resp => {
+        let members = [...resp].filter(m => m.playerId === this.gameDataService.currentUser.id);
+        this.selectedMemberStatus = members.length > 0 ? members[0].memberStatus : '';
+      },
+      err => {
+        this.showSpinner = false;
+        this.gameRestService.showErrorToast(err);
+      },
+      () => {
+        this.showSpinner = false;
+        if (this.selectedMemberStatus === 'Applied') {
+          this.gameRestService.showErrorToast('Sorry, the group leader has not approved this application.');
+        } else if (this.selectedMemberStatus === 'Denied') {
+          this.gameRestService.showErrorToast('Sorry, the group leader has denied this application.');
+        } else if (this.selectedMemberStatus === 'Player' 
+                    || this.selectedMemberStatus === 'GroupLeader' 
+                    || this.gameDataService.currentUser.isAppAdmin) {
+          this.selectedGame = {...game};
+          this.isGameSelected = true;
+        }
+      }
+    );
+  }
+
+  /** Clear the game selection, go back to full list */
+  public clearSelection() {
+    this.isGameSelected = false;
+    this.selectedGame = null;
   }
 
 }

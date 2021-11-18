@@ -18,7 +18,8 @@ import {
   GAME_PLAYERS_PATH,
   GAME_MESSAGE_BASE_PATH,
   WEIGHT_BASE_PATH,
-  PAYMENT_BASE_PATH
+  PAYMENT_BASE_PATH,
+  MEMBER_GAME_PATH
 } from './constants';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -120,6 +121,14 @@ export class GameRestService {
   public setVacationStartDate(memberId: number, editedMember: Member): Observable<Member> {
     const url = BASE_URL + MEMBER_VACATION_PATH + memberId;
     return this.http.put<Member>(url, editedMember).pipe(
+      retry(3),
+      catchError(this.handleError));
+  }
+
+  /** GET: get all members of a specified game. Any player. */
+  public getGameMembers(gameId: number): Observable<Member[]> {
+    const url = BASE_URL + MEMBER_GAME_PATH + gameId;
+    return this.http.get<Member[]>(url).pipe(
       retry(3),
       catchError(this.handleError));
   }

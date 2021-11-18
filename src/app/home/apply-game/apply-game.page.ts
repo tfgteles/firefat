@@ -16,7 +16,9 @@ export class ApplyGamePage implements OnInit {
 
   public memberFormGroup: FormGroup;
   public newMember: Member;
-  public games: Game[];
+  public allGames: Game[];
+  public filteredGames: Game[];
+  private membershipIds: number[];
   public selectedGameName: string = '';
   public selectedGameId: number = 0;
   public selectedGameWeightUnit: string = '';
@@ -37,10 +39,11 @@ export class ApplyGamePage implements OnInit {
   public async ngOnInit(): Promise<void> {
 
     this.showSpinner = true;
+    this.membershipIds = this.gameDataService.currentUser.membership.map(g => g.id);
 
     this.gameRestService.getAllActiveGames().subscribe(resp => {
       this.gameDataService.activeGames = [...resp];
-      this.games = [...resp];
+      this.allGames = [...resp];
       
     },
     err => {
@@ -48,6 +51,7 @@ export class ApplyGamePage implements OnInit {
       this.gameRestService.showErrorToast(err);
     },
     () => {
+      this.filteredGames = [...this.allGames].filter(g => !this.membershipIds.includes(g.id));
       this.showSpinner = false;
     });
 
@@ -64,7 +68,7 @@ export class ApplyGamePage implements OnInit {
     };
     
     this.gameRestService.applyToAGame(member).subscribe(resp => {
-      this.gameDataService.currentUser.membership.push(this.games.find(g => g.id === this.selectedGameId));
+      this.gameDataService.currentUser.membership.push(this.filteredGames.find(g => g.id === this.selectedGameId));
       this.showSpinner = false;
     },
     err => {
@@ -88,6 +92,21 @@ export class ApplyGamePage implements OnInit {
   public clearSelection() {
     this.selectedGameId = 0;
     this.selectedGameName = '';
+  }
+
+  /**
+   * Helper method to filter the list of game to apply for
+   * @param searchString {string} search string
+   */
+  public filterList(searchString: string): void {
+    this.filteredGames = [...this.allGames].filter(g => !this.membershipIds.includes(g.id) && g.gameName.includes(searchString));
+  }
+
+  /**
+   * Clear the applied filter, show the original list
+   */
+  public clearGameFilter() {
+    this.filteredGames = [...this.allGames].filter(g => !this.membershipIds.includes(g.id));
   }
 
 }

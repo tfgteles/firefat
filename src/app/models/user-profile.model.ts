@@ -18,5 +18,6 @@ export interface UserProfile {
     userHeight?: number;
     userBio?: string;
     userPhoto?: string; // to be developed
+    isAppAdmin?: boolean;
     membership?: Game[];
 }

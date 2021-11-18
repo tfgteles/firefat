@@ -52,6 +52,7 @@ export class UserProfilePage implements OnInit {
       id: this.gameDataService.currentUser.id,
       userEmail: this.gameDataService.currentUser.userEmail,
       preferredGameId: this.gameDataService.currentUser.preferredGameId,
+      isAppAdmin: this.gameDataService.currentUser.isAppAdmin,
       ...this.profileFormGroup.value
     };
     userProfile.userName = userProfile.userName? userProfile.userName : userProfile.firstName + ' ' + userProfile.lastName;
