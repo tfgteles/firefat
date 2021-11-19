@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-      <ion-button (click)="enterWeight()" [disabled]="weightFormGroup.invalid || showSpinner" size="default" slot="end">
+      <ion-button (click)="enterWeight()" [disabled]="weightFormGroup.invalid || showSpinner || isFileChosen" size="default" slot="end">
         SEND WEIGHT
       </ion-button>
     </ion-item>

@@ -15,7 +15,7 @@ export class PaymentPage implements OnInit {
   public memberId: number = 0;
   public fileName: string = '';
   public file: File = null;
-  private isFileChosen: boolean;
+  public isFileChosen: boolean;
   public showSpinner: boolean;
 
   constructor(
@@ -43,9 +43,8 @@ export class PaymentPage implements OnInit {
     formData.append('payeeId', this.memberId.toString());
     formData.append('paymentDate', this.paymentFormGroup.get('paymentDate').value);
     formData.append('amountPaid', this.paymentFormGroup.get('amountPaid').value.toString());
-    if (this.isFileChosen) {
-      formData.append('receiptImage', this.file, this.fileName);
-    }
+    formData.append('receiptImage', this.file, this.fileName);
+    
     this.gameRestService.sendPayment(formData).subscribe(resp => {
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).payments.push({...resp});
     },
