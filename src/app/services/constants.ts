@@ -1,6 +1,6 @@
 // Base URL - either local or on server
-export const BASE_URL: string = 'https://localhost:44319/';
-// export const BASE_URL: string = 'https://firefatcapstone.azurewebsites.net/';
+// export const BASE_URL: string = 'https://localhost:44319/';
+export const BASE_URL: string = 'https://firefatcapstone.azurewebsites.net/';
 
 // Authentication
 export const LOGIN_PATH: string = 'authmanagement/login';
