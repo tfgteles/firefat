@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Game } from 'src/app/models/game.model';
 import { UserProfile } from 'src/app/models/user-profile.model';
+import { AdminRestService } from 'src/app/services/admin-rest.service';
 import { GameDataService } from 'src/app/services/game-data.service';
 import { GameRestService } from 'src/app/services/game-rest.service';
 
@@ -23,11 +24,29 @@ export class CurrentGamePage implements OnInit {
     public modalController: ModalController, 
     private gameRestService: GameRestService, 
     private gameDataService: GameDataService,
+    private adminRestService: AdminRestService,
     private router: Router) { }
 
   public ngOnInit() { 
-    this.games = [...this.gameDataService.currentUser.membership.filter(g => g.id !== this.gameDataService.currentUser.preferredGameId)];
     this.showSpinner = false;
+    if (this.gameDataService.currentUser.isAppAdmin) {
+      this.showSpinner = true;
+      this.adminRestService.getAllGames().subscribe(
+        resp => {
+          this.games = [...resp];
+        },
+        err => {
+          this.showSpinner = false;
+          this.gameRestService.showErrorToast(err);
+        },
+        () => {
+          this.showSpinner = false;
+        }
+      );
+    } else {
+      this.games = [...this.gameDataService.currentUser.membership.filter(g => g.id !== this.gameDataService.currentUser.preferredGameId)];
+    }
+    
   }
 
   /**

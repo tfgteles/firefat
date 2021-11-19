@@ -15,8 +15,10 @@ export class HomePage implements OnInit {
   constructor(public modalController: ModalController, private gameDataService: GameDataService) { }
 
   ngOnInit() {
-    this.isAppAdmin = this.gameDataService.currentUser.isAppAdmin;
+    this.isAppAdmin = true;
+    this.isAppAdmin = this.gameDataService.currentUser?.isAppAdmin;
   }
+
 
   async presentAdminUserModal() {
     const modal = await this.modalController.create({

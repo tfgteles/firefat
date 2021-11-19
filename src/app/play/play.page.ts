@@ -13,7 +13,8 @@ export class PlayPage implements OnInit {
   constructor(private gameDataService: GameDataService) { }
 
   ngOnInit() {
-    this.isGroupLeader = this.gameDataService.currentGame.adminUserId === this.gameDataService.currentUser.id;
+    this.isGroupLeader = this.gameDataService.currentGame.adminUserId === this.gameDataService.currentUser.id
+                          || this.gameDataService.currentUser.isAppAdmin;
   }
 
 }

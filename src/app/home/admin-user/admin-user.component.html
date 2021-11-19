@@ -14,14 +14,69 @@
     <ion-card-header (click)="toggleShowGamesCard()">
       <ion-card-title >Games Stats</ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="showGamesCard"></ion-card-content>
+    <ion-card-content *ngIf="showGamesCard">
+      <ion-item>
+        <ion-label>Sort by:</ion-label>
+        <ion-select (ionChange)="sortAdminGames($event.target.value)">
+          <ion-select-option value="total">total weight loss</ion-select-option>
+          <ion-select-option value="percentual">% weight loss</ion-select-option>
+          <ion-select-option value="average">average weight loss</ion-select-option>
+          <ion-select-option value="recent">most recent</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="1">Id</ion-col>
+          <ion-col size="2">Start Date</ion-col>
+          <ion-col size="2">End Date</ion-col>
+          <ion-col size="2">Weight Loss</ion-col>
+          <ion-col size="1">%</ion-col>
+          <ion-col size="2">Average</ion-col>
+          <ion-col size="2">Total Paid</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let g of adminGames">
+          <ion-col size="1">{{g.gameId}}</ion-col>
+          <ion-col size="2">{{g.startDate | date: 'mediumDate'}}</ion-col>
+          <ion-col size="2">{{g.endDate | date: 'mediumDate'}}</ion-col>
+          <ion-col size="2">{{g.totalWeightLoss | number: '1.1-1'}} {{g.weightUnit}}</ion-col>
+          <ion-col size="1">{{g.percentageLoss | number: '1.1-1'}}</ion-col>
+          <ion-col size="2">{{g.averageWeightLoss | number: '1.1-1'}} {{g.weightUnit}}</ion-col>
+          <ion-col size="2">{{g.totalPaid | number: '1.2-2'}} {{g.currency}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   </ion-card>
 
   <ion-card>
     <ion-card-header (click)="toggleShowMembersCard()">
-      <ion-card-title >Members Stats</ion-card-title>
+      <ion-card-title >Participants Stats</ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="showMembersCard"></ion-card-content>
+    <ion-card-content *ngIf="showMembersCard">
+      <ion-item>
+        <ion-label>Sort by:</ion-label>
+        <ion-select (ionChange)="sortAdminMembers($event.target.value)">
+          <ion-select-option value="weight">weight loss</ion-select-option>
+          <ion-select-option value="percentual">% weight loss</ion-select-option>
+          <ion-select-option value="recent">most recent</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="1">Id</ion-col>
+          <ion-col size="3">End Date</ion-col>
+          <ion-col size="3">Weight Loss</ion-col>
+          <ion-col size="2">%</ion-col>
+          <ion-col size="3">Total Paid</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let m of adminMembers">
+          <ion-col size="1">{{m.memberId}}</ion-col>
+          <ion-col size="3">{{m.lastDate | date: 'mediumDate'}}</ion-col>
+          <ion-col size="3">{{m.weightLoss | number: '1.1-1'}} {{m.weightUnit}}</ion-col>
+          <ion-col size="2">{{m.percentageLoss | number: '1.1-1'}}</ion-col>
+          <ion-col size="3">{{m.totalPaid | number: '1.2-2'}} {{m.currency}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   </ion-card>
 
   <ion-spinner name="bubbles" class="overlay-spinner" *ngIf="showSpinner"></ion-spinner>

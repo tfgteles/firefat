@@ -72,7 +72,7 @@ export class GroupLeaderPage implements OnInit {
       goalAchieved: memberDto.goalAchieved
     };
     this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
-      this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).memberStatus = newMemberStatus;
+      this.gameDataService.currentGame.members.find(m => m.id === memberId).memberStatus = newMemberStatus;
       this.applicants = [...this.gameDataService.currentGame.members.filter(m => m.memberStatus === 'Applied')];
     },
     err => {
@@ -173,7 +173,7 @@ export class GroupLeaderPage implements OnInit {
       goalAchieved: memberDto.goalAchieved
     };
     this.gameRestService.editMember(backendMember.id, backendMember).subscribe(() => {
-      this.gameDataService.currentGame.members.find(m => m.playerId === this.gameDataService.currentUser.id).vacationStartDateId = backendMember.vacationStartDateId;
+      this.gameDataService.currentGame.members.find(m => m.id === backendMember.id).vacationStartDateId = backendMember.vacationStartDateId;
     },
     err => {
       this.showSpinner = false;

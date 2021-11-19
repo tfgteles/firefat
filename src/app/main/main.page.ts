@@ -12,6 +12,7 @@ import { LoginService } from '../services/login.service';
 export class MainPage implements OnInit {
 
   public hasCurrentGame: boolean;
+  public hasCurrentUser: boolean;
   public showSpinner: boolean;
 
   constructor(
@@ -20,12 +21,14 @@ export class MainPage implements OnInit {
     private gameRestService: GameRestService,
     private router: Router) { }
 
-    /** Do the initial load: user and game */
+  /** Do the initial load: user and game */
   public async ngOnInit(): Promise<void> {
     this.hasCurrentGame = false;
+    this.hasCurrentUser = false;
     this.showSpinner = true;
     this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
       this.gameDataService.currentUser = {...resp};
+      this.hasCurrentUser = true;
     },
     err => {
       this.showSpinner = false;
