@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
-      <ion-button (click)="enterPayment()" [disabled]="paymentFormGroup.invalid || showSpinner || isFileChosen" size="default" slot="end">
+      <ion-button (click)="enterPayment()" [disabled]="paymentFormGroup.invalid || showSpinner || !isFileChosen" size="default" slot="end">
         SEND PAYMENT
       </ion-button>
     </ion-item>
