@@ -37,7 +37,6 @@ export class UserProfilePage implements OnInit {
       country: [this.gameDataService.currentUser?.country],
       userHeight: [this.gameDataService.currentUser?.userHeight],
       userBio: [this.gameDataService.currentUser?.userBio],
-      userPhoto: [this.gameDataService.currentUser?.userPhoto],
     });
   }
 
@@ -53,7 +52,19 @@ export class UserProfilePage implements OnInit {
       userEmail: this.gameDataService.currentUser.userEmail,
       preferredGameId: this.gameDataService.currentUser.preferredGameId,
       isAppAdmin: this.gameDataService.currentUser.isAppAdmin,
-      ...this.profileFormGroup.value
+      firstName: this.profileFormGroup.value.firstName,
+      lastName: this.profileFormGroup.value.lastName,
+      userName: this.profileFormGroup.value.userName? this.profileFormGroup.value.userName : this.profileFormGroup.value.firstName,
+      userGender: this.profileFormGroup.value.userGender,
+      dateOfBirth: this.profileFormGroup.value.dateOfBirth ? this.profileFormGroup.value.dateOfBirth : null,
+      phoneNumber: this.profileFormGroup.value.phoneNumber,
+      streetAddress: this.profileFormGroup.value.streetAddress,
+      city: this.profileFormGroup.value.city,
+      province: this.profileFormGroup.value.province,
+      postalCode: this.profileFormGroup.value.postalCode,
+      country: this.profileFormGroup.value.country,
+      userHeight: this.profileFormGroup.value.userHeight ? this.profileFormGroup.value.userHeight : 0,
+      userBio: this.profileFormGroup.value.userBio,
     };
     userProfile.userName = userProfile.userName? userProfile.userName : userProfile.firstName + ' ' + userProfile.lastName;
     this.gameRestService.updateUserProfile(userProfile.id, userProfile).subscribe(() => {
@@ -66,7 +77,6 @@ export class UserProfilePage implements OnInit {
     () => {
       this.gameRestService.getLoggedInUserProfile().subscribe(resp => {
         this.gameDataService.currentUser = {...resp};
-        this.router.navigate(['/main/home']);
       },
       err => {
         this.showSpinner = false;

@@ -20,6 +20,7 @@ export class WeightPage implements OnInit {
   public currentMember: Member;
   public fileName: string = '';
   public file: File = null;
+  private isFileChosen: boolean;
   public showSpinner: boolean;
 
   constructor(
@@ -33,6 +34,7 @@ export class WeightPage implements OnInit {
       weightMeasure: ['', Validators.required]
     });
 
+    this.isFileChosen = false;
     this.showSpinner = false;
     this.dateId = this.gameDataService.todayWeightDateId();
     this.memberId = this.gameDataService.currentMemberId();
@@ -47,7 +49,9 @@ export class WeightPage implements OnInit {
     formData.append('groupMemberId', this.memberId.toString());
     formData.append('dateId', this.dateId.toString());
     formData.append('weightMeasure', this.weightFormGroup.get('weightMeasure').value.toString());
-    formData.append('scaleImage', this.file, this.fileName);
+    if (this.isFileChosen) {
+      formData.append('scaleImage', this.file, this.fileName);
+    }
     this.gameRestService.sendWeight(formData).subscribe(resp => {
       this.gameDataService.currentGame.members.find(m => m.id === this.memberId).weights.push({...resp});
     },
@@ -84,10 +88,7 @@ export class WeightPage implements OnInit {
   public loadImage(evt) {
     this.file = <File>evt.target.files[0];
     this.fileName = this.file.name;
-  }
-
-  private congratsMessage() {
-    //
+    this.isFileChosen = true;
   }
 
 }
